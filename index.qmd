@@ -344,8 +344,11 @@ El plan, las reglas y la bitácora van a ser archivos .md dentro del repositorio
 ::: {.small}
 - Sistema de **publicación científica y técnica** de código abierto (Posit; sucesor de R Markdown).
 - Un `.qmd` = Markdown + bloques de código **ejecutables** (Python, R, Julia) + opciones en YAML.
-- Un mismo archivo fuente rinde a **HTML, PDF (LaTeX), docx, diapositivas, sitios web y libros**.
 :::
+
+::: {.columns}
+::: {.column width="52%"}
+**El fuente** (`index.qmd`)
 
 ````markdown
 ---
@@ -353,17 +356,38 @@ title: "Análisis de mediciones"
 format: html
 ---
 
-Los datos muestran un máximo en verano (@fig-serie).
+Los datos muestran un máximo
+en verano (@fig-serie).
 
 ```{{python}}
 #| label: fig-serie
-#| fig-cap: "Serie de tiempo de la medición"
+#| fig-cap: "Serie de la medición"
 df.plot(x="fecha", y="flujo_l_s")
 ```
 ````
+:::
+::: {.column width="48%"}
+**Cómo se convierte**
+
+```bash
+quarto render index.qmd   # → HTML
+quarto render --to pdf    # → PDF (LaTeX)
+quarto render --to docx   # → Word
+quarto render --to revealjs  # → diapos
+```
+
+**Y mientras escribes:** `quarto preview`
+
+::: {.small}
+Deja el documento **vivo en el navegador**: cada
+vez que guardas, se re-ejecuta y refresca solo —
+escribes y **ves el resultado al instante**.
+:::
+:::
+:::
 
 ::: {.pregunta .small}
-Estas diapositivas están hechas en Quarto.
+Estas diapositivas están hechas en Quarto — y se construyeron con `quarto preview`.
 :::
 
 ::: {.notes}
