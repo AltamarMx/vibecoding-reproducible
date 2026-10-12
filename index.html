@@ -571,23 +571,37 @@ texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Q
 <ul>
 <li>Sistema de <strong>publicación científica y técnica</strong> de código abierto (Posit; sucesor de R Markdown).</li>
 <li>Un <code>.qmd</code> = Markdown + bloques de código <strong>ejecutables</strong> (Python, R, Julia) + opciones en YAML.</li>
-<li>Un mismo archivo fuente rinde a <strong>HTML, PDF (LaTeX), docx, diapositivas, sitios web y libros</strong>.</li>
 </ul>
 </div>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><strong>El fuente</strong> (<code>index.qmd</code>)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Análisis de mediciones"</span></span>
 <span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>Los datos muestran un máximo en verano (@fig-serie).</span>
-<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-serie</span></span>
-<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Serie de tiempo de la medición"</span></span>
-<span id="cb5-11"><a href="" aria-hidden="true" tabindex="-1"></a>df.plot(x<span class="op">=</span><span class="st">"fecha"</span>, y<span class="op">=</span><span class="st">"flujo_l_s"</span>)</span>
-<span id="cb5-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>Los datos muestran un máximo</span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>en verano (@fig-serie).</span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-serie</span></span>
+<span id="cb5-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Serie de la medición"</span></span>
+<span id="cb5-12"><a href="" aria-hidden="true" tabindex="-1"></a>df.plot(x<span class="op">=</span><span class="st">"fecha"</span>, y<span class="op">=</span><span class="st">"flujo_l_s"</span>)</span>
+<span id="cb5-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:48%;">
+<p><strong>Cómo se convierte</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render index.qmd   <span class="co"># → HTML</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render <span class="at">--to</span> pdf    <span class="co"># → PDF (LaTeX)</span></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render <span class="at">--to</span> docx   <span class="co"># → Word</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render <span class="at">--to</span> revealjs  <span class="co"># → diapos</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Y mientras escribes:</strong> <code>quarto preview</code></p>
+<div class="small">
+<p>Deja el documento <strong>vivo en el navegador</strong>: cada vez que guardas, se re-ejecuta y refresca solo — escribes y <strong>ves el resultado al instante</strong>.</p>
+</div>
+</div></div>
 <div class="pregunta small">
-<p>Estas diapositivas están hechas en Quarto.</p>
+<p>Estas diapositivas están hechas en Quarto — y se construyeron con <code>quarto preview</code>.</p>
 </div>
 <aside class="notes">
 <p>Señalar las tres piezas en el ejemplo: YAML arriba (opciones documentadas), texto en Markdown con referencia cruzada, celda de Python con etiqueta y pie de figura.</p>
@@ -673,9 +687,9 @@ texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Q
 <section id="todo-empieza-por-el-entorno-uv" class="slide level2 center">
 <h2>Todo empieza por el entorno: <code>uv</code></h2>
 <div class="ls-grande">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init analisis-climalab          <span class="co"># proyecto + ambiente virtual + pyproject.toml</span></span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas pyarrow matplotlib   <span class="co"># instala y FIJA versiones en uv.lock</span></span>
-<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run quarto render               <span class="co"># todo corre dentro del ambiente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init analisis-climalab          <span class="co"># proyecto + ambiente virtual + pyproject.toml</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas pyarrow matplotlib   <span class="co"># instala y FIJA versiones en uv.lock</span></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run quarto render               <span class="co"># todo corre dentro del ambiente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Un solo gestor: proyecto, versión de Python y paquetes; el ambiente virtual deja de ser un trámite.</li>
@@ -876,33 +890,33 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <h2>PLAN.md: el contrato con el agente</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># PLAN · Clima ClimaLab (abr–ago 2026)</span></span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivo</span></span>
-<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>Caracterizar temperatura, radiación</span>
-<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>y viento de la estación.</span>
-<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Datos</span></span>
-<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a>climalab_2026-04-08_2026-08-05.parquet</span>
-<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>172 433 filas · cadencia 1 min</span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a>tdb <span class="co">[</span><span class="ot">°C</span><span class="co">]</span> · rh <span class="co">[</span><span class="ot">%</span><span class="co">]</span> · ghi/dni/dhi <span class="co">[</span><span class="ot">W/m²</span><span class="co">]</span></span>
-<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a>ws <span class="co">[</span><span class="ot">m/s</span><span class="co">]</span> · wd <span class="co">[</span><span class="ot">°</span><span class="co">]</span> · p_atm · rain_acc</span>
-<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Herramientas</span></span>
-<span id="cb9-14"><a href="" aria-hidden="true" tabindex="-1"></a>Instalar con <span class="in">`uv add`</span>, correr con <span class="in">`uv run`</span>.</span>
-<span id="cb9-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pasos</span></span>
-<span id="cb9-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Validar crudos con pruebas físicas</span>
-<span id="cb9-18"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Huecos y NaN → data/002_intermediate/</span>
-<span id="cb9-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Día típico, rosa de viento, GHI diaria</span>
-<span id="cb9-20"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Criterios de aceptación</span></span>
-<span id="cb9-22"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pytest`</span> pasa · GHI nocturna = 0</span>
-<span id="cb9-23"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Figuras regenerables con <span class="in">`quarto render`</span></span>
-<span id="cb9-24"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bitácora y decisiones</span></span>
-<span id="cb9-26"><a href="" aria-hidden="true" tabindex="-1"></a>Qué propuso la IA, qué decidió</span>
-<span id="cb9-27"><a href="" aria-hidden="true" tabindex="-1"></a>la persona autora, y por qué.</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># PLAN · Clima ClimaLab (abr–ago 2026)</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivo</span></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>Caracterizar temperatura, radiación</span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>y viento de la estación.</span>
+<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Datos</span></span>
+<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>climalab_2026-04-08_2026-08-05.parquet</span>
+<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>172 433 filas · cadencia 1 min</span>
+<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>tdb <span class="co">[</span><span class="ot">°C</span><span class="co">]</span> · rh <span class="co">[</span><span class="ot">%</span><span class="co">]</span> · ghi/dni/dhi <span class="co">[</span><span class="ot">W/m²</span><span class="co">]</span></span>
+<span id="cb10-11"><a href="" aria-hidden="true" tabindex="-1"></a>ws <span class="co">[</span><span class="ot">m/s</span><span class="co">]</span> · wd <span class="co">[</span><span class="ot">°</span><span class="co">]</span> · p_atm · rain_acc</span>
+<span id="cb10-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Herramientas</span></span>
+<span id="cb10-14"><a href="" aria-hidden="true" tabindex="-1"></a>Instalar con <span class="in">`uv add`</span>, correr con <span class="in">`uv run`</span>.</span>
+<span id="cb10-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pasos</span></span>
+<span id="cb10-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Validar crudos con pruebas físicas</span>
+<span id="cb10-18"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Huecos y NaN → data/002_intermediate/</span>
+<span id="cb10-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Día típico, rosa de viento, GHI diaria</span>
+<span id="cb10-20"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Criterios de aceptación</span></span>
+<span id="cb10-22"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pytest`</span> pasa · GHI nocturna = 0</span>
+<span id="cb10-23"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Figuras regenerables con <span class="in">`quarto render`</span></span>
+<span id="cb10-24"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bitácora y decisiones</span></span>
+<span id="cb10-26"><a href="" aria-hidden="true" tabindex="-1"></a>Qué propuso la IA, qué decidió</span>
+<span id="cb10-27"><a href="" aria-hidden="true" tabindex="-1"></a>la persona autora, y por qué.</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column small" style="width:45%;">
 <ul>
 <li>Se escribe <strong>antes</strong> de pedir una sola línea de código.</li>
@@ -954,13 +968,13 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <div class="small">
 <p>El <strong>diff</strong> es la lista exacta de lo que cambió: líneas que salen (<code>-</code>) y líneas que entran (<code>+</code>). Con agentes es <strong>el</strong> instrumento de revisión: no relees todo el archivo, lees <strong>el cambio</strong>.</p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>$ git diff src/proyecto/radiacion.py</span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a> def ghi_diaria(ghi_w_m2):</span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>     """GHI diaria en kWh/m² por día."""</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">-    wh = ghi_w_m2 * (1 / 60)               # cada muestra [W/m²] dura 1 min</span></span>
-<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">-    return wh.resample("1D").sum() / 1000</span></span>
-<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">+    return ghi_w_m2.resample("1D").mean() / 1000</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>$ git diff src/proyecto/radiacion.py</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a> def ghi_diaria(ghi_w_m2):</span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>     """GHI diaria en kWh/m² por día."""</span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">-    wh = ghi_w_m2 * (1 / 60)               # cada muestra [W/m²] dura 1 min</span></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">-    return wh.resample("1D").sum() / 1000</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">+    return ghi_w_m2.resample("1D").mean() / 1000</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="small">
 <ul>
 <li>El agente “simplificó” el cálculo… y cambió <code>sum()</code> por <code>mean()</code>: eso ya no es <strong>energía diaria</strong> [kWh/m²·día], es <strong>potencia promedio</strong> [kW/m²].</li>
@@ -990,13 +1004,13 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <p><span class="demo-title">Demo en vivo 2 · ≤ 3 min</span> Con el agente, en <code>analysis/index.qmd</code>: la temperatura de ClimaLab en <strong>dos pestañas</strong> —<br> <strong>(1)</strong> promedio <strong>diario</strong> y <strong>(2)</strong> <em>running mean</em> de <strong>30 días</strong>.<br> Las pestañas son para <strong>decidir con cuál me quedo</strong>, conservando <strong>ambas opciones</strong> en el mismo documento para discutirlas con mi equipo.</p>
 </div>
 <p><strong>El truco de Quarto — un <em>tabset</em>:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Promedio diario</span></span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>tdb.resample("1D").mean()</span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Running mean 30 días</span></span>
-<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>tdb.resample("1D").mean().rolling(30).mean()</span>
-<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Promedio diario</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>tdb.resample("1D").mean()</span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Running mean 30 días</span></span>
+<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a>tdb.resample("1D").mean().rolling(30).mean()</span>
+<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="small">
 <p>Por eso importa <strong>aprender Quarto</strong> y conocer sus capacidades —tabsets, referencias cruzadas, opciones de celda, formatos—: <strong>no puedes pedirle al agente lo que no sabes que existe.</strong></p>
 </div>
@@ -1019,28 +1033,28 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <div class="columns">
 <div class="column" style="width:44%;">
 <p><strong>La función</strong> (escrita por el agente)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># src/proyecto/energia.py</span></span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calcular_energia(potencia_w, freq<span class="op">=</span><span class="st">"1h"</span>):</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Potencia [W] → energía [Wh],</span></span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">    agregada a la frecuencia freq."""</span></span>
-<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>    paso <span class="op">=</span> (potencia_w.index[<span class="dv">1</span>]</span>
-<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="op">-</span> potencia_w.index[<span class="dv">0</span>])</span>
-<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a>    dt_h <span class="op">=</span> paso.total_seconds() <span class="op">/</span> <span class="dv">3600</span></span>
-<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (potencia_w <span class="op">*</span> dt_h).resample(freq).<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># src/proyecto/energia.py</span></span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calcular_energia(potencia_w, freq<span class="op">=</span><span class="st">"1h"</span>):</span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Potencia [W] → energía [Wh],</span></span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">    agregada a la frecuencia freq."""</span></span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>    paso <span class="op">=</span> (potencia_w.index[<span class="dv">1</span>]</span>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="op">-</span> potencia_w.index[<span class="dv">0</span>])</span>
+<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>    dt_h <span class="op">=</span> paso.total_seconds() <span class="op">/</span> <span class="dv">3600</span></span>
+<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (potencia_w <span class="op">*</span> dt_h).resample(freq).<span class="bu">sum</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:56%;">
 <p><strong>La prueba</strong> (datos inventados por la persona autora)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_energia.py</span></span>
-<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_energia_con_respuesta_conocida():</span>
-<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1200 W constantes, 2 horas, cada minuto</span></span>
-<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> pd.date_range(<span class="st">"2026-01-01"</span>,</span>
-<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>                        periods<span class="op">=</span><span class="dv">120</span>, freq<span class="op">=</span><span class="st">"1min"</span>)</span>
-<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>    potencia <span class="op">=</span> pd.Series(<span class="fl">1200.0</span>, index<span class="op">=</span>idx)</span>
-<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>    energia <span class="op">=</span> calcular_energia(potencia, freq<span class="op">=</span><span class="st">"1h"</span>)</span>
-<span id="cb13-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># con papel y lápiz: 1.2 kW × 1 h = 1200 Wh</span></span>
-<span id="cb13-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (energia <span class="op">==</span> <span class="fl">1200.0</span>).<span class="bu">all</span>()</span>
-<span id="cb13-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> energia.<span class="bu">sum</span>() <span class="op">==</span> <span class="fl">2400.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_energia.py</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_energia_con_respuesta_conocida():</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1200 W constantes, 2 horas, cada minuto</span></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> pd.date_range(<span class="st">"2026-01-01"</span>,</span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>                        periods<span class="op">=</span><span class="dv">120</span>, freq<span class="op">=</span><span class="st">"1min"</span>)</span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>    potencia <span class="op">=</span> pd.Series(<span class="fl">1200.0</span>, index<span class="op">=</span>idx)</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>    energia <span class="op">=</span> calcular_energia(potencia, freq<span class="op">=</span><span class="st">"1h"</span>)</span>
+<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># con papel y lápiz: 1.2 kW × 1 h = 1200 Wh</span></span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (energia <span class="op">==</span> <span class="fl">1200.0</span>).<span class="bu">all</span>()</span>
+<span id="cb14-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> energia.<span class="bu">sum</span>() <span class="op">==</span> <span class="fl">2400.0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <div class="small">
 <ul>
@@ -1068,17 +1082,17 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <div class="small">
 <p>Cada afirmación verificable del plan se convierte en una <strong>prueba física</strong> con pytest. Estas tres corren sobre los datos reales de ClimaLab, con el resultado real:</p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_radiacion_nocturna():        <span class="co"># PASA: el piranómetro está bien</span></span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>    noche <span class="op">=</span> df.between_time(<span class="st">"22:00"</span>, <span class="st">"04:00"</span>)</span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (noche[<span class="st">"ghi"</span>] <span class="op">==</span> <span class="dv">0</span>).<span class="bu">all</span>()</span>
-<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_rangos_fisicos():            <span class="co"># PASA: rh en [0, 100], ws ≥ 0</span></span>
-<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> df[<span class="st">"rh"</span>].between(<span class="dv">0</span>, <span class="dv">100</span>).<span class="bu">all</span>()</span>
-<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> df[<span class="st">"ws"</span>].ge(<span class="dv">0</span>).<span class="bu">all</span>()</span>
-<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_serie_completa():            <span class="co"># FALLA: hay 2 huecos &gt; 1 min</span></span>
-<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>    saltos <span class="op">=</span> df.index.to_series().diff()</span>
-<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="kw">not</span> (saltos <span class="op">&gt;</span> pd.Timedelta(<span class="st">"1min"</span>)).<span class="bu">any</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_radiacion_nocturna():        <span class="co"># PASA: el piranómetro está bien</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>    noche <span class="op">=</span> df.between_time(<span class="st">"22:00"</span>, <span class="st">"04:00"</span>)</span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (noche[<span class="st">"ghi"</span>] <span class="op">==</span> <span class="dv">0</span>).<span class="bu">all</span>()</span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_rangos_fisicos():            <span class="co"># PASA: rh en [0, 100], ws ≥ 0</span></span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> df[<span class="st">"rh"</span>].between(<span class="dv">0</span>, <span class="dv">100</span>).<span class="bu">all</span>()</span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> df[<span class="st">"ws"</span>].ge(<span class="dv">0</span>).<span class="bu">all</span>()</span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_serie_completa():            <span class="co"># FALLA: hay 2 huecos &gt; 1 min</span></span>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>    saltos <span class="op">=</span> df.index.to_series().diff()</span>
+<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="kw">not</span> (saltos <span class="op">&gt;</span> pd.Timedelta(<span class="st">"1min"</span>)).<span class="bu">any</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="small">
 <ul>
 <li>La prueba que <strong>falla</strong> no es un fracaso: obliga a decidir (¿interpolar?, ¿dejar el hueco?) y a <strong>documentar la decisión</strong>.</li>
@@ -1149,7 +1163,7 @@ de palabra en la Demo 3: "cada opción queda escrita y versionada"):
 :::
 
 ````markdown
-```cuacayfyur
+```fwpabnqfxx
 #| label: fig-serie
 #| fig-cap: "Flujo medido vs. modelo"
 #| echo: true          # el código se muestra: auditable
@@ -1178,21 +1192,21 @@ No hay celdas ocultas ni estados de notebook fuera de orden.
 </div>
 <div class="columns">
 <div class="column" style="width:52%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># en analysis/index.qmd,</span></span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># al declarar la figura/tabla FINAL</span></span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>(tabla_resumen</span>
-<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>   .style.<span class="bu">format</span>(precision<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>   .to_latex(<span class="st">"../tex/tabla_resultados.tex"</span>))</span>
-<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>fig.savefig(<span class="st">"../tex/fig03_comparacion.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column" style="width:48%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">% en tex/main.tex (el artículo)</span></span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">table</span>}</span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\input</span>{tabla_resultados.tex}</span>
-<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\caption</span>{Resumen de resultados.}</span>
-<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">table</span>}</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># en analysis/index.qmd,</span></span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># al declarar la figura/tabla FINAL</span></span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>(tabla_resumen</span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>   .style.<span class="bu">format</span>(precision<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>   .to_latex(<span class="st">"../tex/tabla_resultados.tex"</span>))</span>
 <span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">\includegraphics</span>{<span class="ex">fig03_comparacion.png</span>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a>fig.savefig(<span class="st">"../tex/fig03_comparacion.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:48%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">% en tex/main.tex (el artículo)</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">table</span>}</span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\input</span>{tabla_resultados.tex}</span>
+<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\caption</span>{Resumen de resultados.}</span>
+<span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">table</span>}</span>
+<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">\includegraphics</span>{<span class="ex">fig03_comparacion.png</span>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <div class="small">
 <p>El <code>.qmd</code> queda como <strong>suplemento reproducible</strong>: el revisor regenera todo con <code>uv sync --locked &amp;&amp; uv run quarto render</code>.</p>
