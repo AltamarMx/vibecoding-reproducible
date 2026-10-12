@@ -147,6 +147,8 @@ El ejemplo es el dataset de **ClimaLab** (ver Decisiones tomadas); el PLAN.md de
 - [x] Publicación: `quarto publish gh-pages` (por eso el deck es `index.qmd`).
 - [x] Bloque 4 ahora incluye configuración con `uv` (ambiente virtual, lock, y que PLAN.md declare "instalar con uv") — 6 min; colchón queda en 1 min.
 
+- [x] Recorte de tiempo (revisión crítica): **comentadas** en `index.qmd` (no borradas) "Los síntomas", "Una narrativa, no una receta" y "Quarto mantiene todo ordenado y auditable". Sus mensajes clave se rescataron: el remate "el problema no es la IA…" pasó a "El nivel sutil"; la línea "narrativa, no receta + invariantes" pasó al pie de "Estructura propuesta"; las opciones de celda se dicen de palabra en la Demo 3. Deck: 30 diapositivas, 36 min + 4 de colchón. MCP queda como fusible en vivo.
+
 ## Pendientes por confirmar
 
 - [x] Modelo local: `qwen3.8:27b-mlx` (Qwen3.8 27B vía MLX en Apple Silicon).

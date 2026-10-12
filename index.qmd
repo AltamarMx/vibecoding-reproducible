@@ -26,17 +26,21 @@ format:
 OJO: este comentario va DENTRO de la primera diapositiva. Si se coloca antes del
 primer ##, revealjs crea una diapositiva en blanco con él.
 
-GUION DE 40 MINUTOS (39 + 1 de colchón)
+GUION DE 40 MINUTOS (36 + 4 de colchón)
   Bloque 1  Vibe coding: definición -> tuit -> Karpathy
             -> pivote "así no se hace ciencia" ............ 4 min  (diap. 2-6)
-  Bloque 2  El desorden, dos niveles ...................... 4 min  (diap. 7-9)
-  Bloque 3  LA PROPUESTA + Markdown, Quarto y versionado ... 4 min  (diap. 10-14)
-  Bloque 4  Configuración (uv), estructura, fragmentación .. 6 min  (diap. 15-18)
-  Bloque 5  Agentes: qué son, nube vs local ................ 4 min  (diap. 19-20)
-  Bloque 6  PLAN.md, diff y pruebas (DEMOS 1 y 2) .......... 7 min  (diap. 21-26)
-  Bloque 7  Spec-driven: de Quarto al artículo (DEMO 3) .... 5 min  (diap. 27-29)
-  Bloque 8  Paquetes y MCP ................................. 3 min  (diap. 30-31)
-  Bloque 9  Cierre: human in the loop ...................... 2 min  (diap. 32-33)
+  Bloque 2  El desorden, dos niveles ...................... 3 min  (diap. 7-8)
+  Bloque 3  LA PROPUESTA + Markdown, Quarto y versionado ... 4 min  (diap. 9-13)
+  Bloque 4  Configuración (uv), estructura, fragmentación .. 5 min  (diap. 14-16)
+  Bloque 5  Agentes: qué son, nube vs local ................ 4 min  (diap. 17-18)
+  Bloque 6  PLAN.md, diff y pruebas (DEMOS 1 y 2) .......... 7 min  (diap. 19-24)
+  Bloque 7  Spec-driven: de Quarto al artículo (DEMO 3) .... 4 min  (diap. 25-26)
+  Bloque 8  Paquetes y MCP ................................. 3 min  (diap. 27-28)
+  Bloque 9  Cierre: human in the loop, preguntas, curso .... 2 min  (diap. 29-31)
+
+  Desactivadas (comentadas en este archivo, no borradas): "Los síntomas",
+  "Una narrativa, no una receta", "Quarto mantiene todo ordenado y auditable".
+  MCP (diap. 28) es el fusible si se va el tiempo en vivo.
 
 Dataset de las demos: data/ClimaLab_2026-04-08_2026-08-05 (1).parquet
   172 433 filas minutales (2026-04-08 -> 2026-08-05), 10 variables:
@@ -223,13 +227,21 @@ Proyecto real (el artículo de EnerHabitat). Qué produce qué —y qué termin�
 vive solo en la **memoria del autor**: esa es la narrativa que se perdió.
 :::
 
+::: {.pregunta .small}
+El problema no es la IA: es la falta de estructura.<br>
+**Cada prompt agrega entropía si no hay contrato.**
+:::
+
 ::: {.notes}
+Transición a LA PROPUESTA: las herramientas que ordenan todo lo demás son viejas,
+simples y aburridas: texto plano con marcas, documentos que ejecutan su código, git.
 Este nivel es el de la mayoría de los proyectos de investigación: no es caos, es entropía.
 Los números en los scripts prometen un orden que los resultados ya no cumplen: hay un 06
 que no existe, los 90 son regeneraciones fuera del flujo, y la tabla del artículo tiene
 cuatro candidatas. Honestidad: esta carpeta es mía.
 :::
 
+<!-- DESACTIVADA (recorte de tiempo; su remate se movió a "El nivel sutil"):
 ## Los síntomas
 
 - Nadie —ni tú dentro de tres meses— puede **regenerar la figura 3**.
@@ -239,10 +251,8 @@ cuatro candidatas. Honestidad: esta carpeta es mía.
 - Hay cuatro versiones de la tabla (`_B`, `_C`, `_all`)… ¿cuál se publicó? **Nadie recuerda.**
 - No hay entorno fijado: en otra máquina, **otro resultado** (¿o ni corre?).
 
-<br>
-
 ::: {.pregunta .small}
-El problema no es la IA: es la falta de estructura.<br>
+El problema no es la IA: es la falta de estructura.
 **Cada prompt agrega entropía si no hay contrato.**
 :::
 
@@ -250,6 +260,7 @@ El problema no es la IA: es la falta de estructura.<br>
 Transición: las dos herramientas que ordenan todo lo demás son viejas, simples y aburridas:
 texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Quarto).
 :::
+-->
 
 <!-- Bloque 3 · La propuesta + Markdown y Quarto · 4 min -->
 
@@ -438,6 +449,11 @@ proyecto/
                            # y tablas .tex que index.qmd declara FINALES
 ```
 
+::: {.small}
+Es una **narrativa, no una receta**: la estructura se adapta al proyecto y a sus datos. Lo que no cambia:
+crudos intocables · entorno fijado · funciones con pruebas · análisis en `.qmd`.
+:::
+
 ::: {.notes}
 Recorrer de arriba a abajo: primero los contratos (PLAN, AGENTS), luego el entorno,
 luego datos con crudos intocables y resultados en data/003_results/, funciones probadas,
@@ -448,6 +464,7 @@ con espacio y "(1)". Moverlo a data/001_raw/ con nombre limpio es parte de la na
 su origen y fecha quedan anotados en la sección Datos del PLAN.md.
 :::
 
+<!-- DESACTIVADA (recorte de tiempo; su mensaje se movió a "Estructura propuesta"):
 ## Una narrativa, no una receta
 
 ::: {.small}
@@ -493,6 +510,7 @@ cada uno pide carpetas distintas. Lo que no cambia:
 Insistir: no es plantilla rígida. Es una narrativa que cuenta de dónde vienen los datos
 y cómo se convierten en el artículo. Los cuatro invariantes sí son innegociables.
 :::
+-->
 
 ## La fragmentación: así se publica la figura incorrecta
 
@@ -825,6 +843,8 @@ Nombrar lo que ya hicimos en el bloque anterior: no inventamos nada,
 es la misma transición que está dando la industria del software con los agentes.
 :::
 
+<!-- DESACTIVADA (recorte de tiempo; el punto de las opciones de celda se dice
+de palabra en la Demo 3: "cada opción queda escrita y versionada"):
 ## Quarto mantiene todo ordenado y auditable
 
 ::: {.small}
@@ -851,6 +871,7 @@ Cada decisión de presentación queda **escrita y versionada**, no en la memoria
 Esto responde "¿y dónde reviso lo que hizo la IA?": en el qmd y en el diff.
 No hay celdas ocultas ni estados de notebook fuera de orden.
 :::
+-->
 
 ## Del `.qmd` a la versión final del artículo
 
@@ -986,8 +1007,10 @@ Cerrar el arco: del vibe coding (código sin leer) a la ciencia reproducible
 
 ## {.center}
 
-::: {.pregunta}
-¿Qué parte de tu próximo análisis<br>**no** delegarías, y por qué?
+[¿Preguntas?]{style="display:block; font-size:2.2em; font-weight:700; color:#1f3a5f; text-align:center; margin-bottom:0.4em;"}
+
+::: {.pregunta .small}
+Y una para ti: ¿qué parte de tu próximo análisis **no** delegarías, y por qué?
 :::
 
 <br>
@@ -999,5 +1022,49 @@ Guillermo Barrios del Valle · gbv@ier.unam.mx · Instituto de Energías Renovab
 :::
 
 ::: {.notes}
-Dejar la pregunta en pantalla durante las preguntas del público.
+Dejar en pantalla durante el Q&A.
+Preguntas sembradas para quien modera, en este orden:
+1. Datos sensibles: "¿Se pueden usar estos agentes cuando los datos no pueden salir
+   de la institución?" (→ diapositiva nube vs local, Qwen/MLX).
+2. Autoría: "Si el agente escribió el código y tú lo revisaste, ¿quién es el autor?
+   ¿Hay que declararlo a la revista?" (→ bitácora en PLAN.md; la persona firma;
+   revisar política de IA de la revista).
+3. Verificación: "Si el agente escribe el código Y las pruebas, ¿quién vigila al
+   vigilante?" (→ pruebas tautológicas; ground truth de la persona autora;
+   diff + pruebas = redundancia deliberada).
+4. Formación: "¿No les atrofia el aprendizaje a los estudiantes?" (→ leer diffs es
+   leer código experto a diario; lo que atrofia es "Accept All"; licencia de conducir).
+:::
+
+## ¿Y si esto fuera un curso?
+
+::: {.pregunta .small}
+**De la terminal al artículo:<br>ciencia reproducible con Python, Quarto y agentes de IA**
+:::
+
+::: {.columns .small}
+::: {.column width="50%"}
+1. **Conoce tu computadora** y la terminal
+2. **Python mínimo** con `uv`: instalación y ambientes virtuales
+3. **git básico**: commit, diff, GitHub
+4. **Quarto**: de Markdown al reporte ejecutable
+:::
+::: {.column width="50%"}
+5. **Estructura del proyecto**: `PLAN.md` y `AGENTS.md`
+6. **Agentes de IA**: harness en la nube (Claude Code) y local (Qwen vía MLX)
+7. **Pruebas**: pytest, respuesta conocida, pruebas físicas
+8. **Proyecto integrador**: de tus datos al reporte reproducible
+:::
+:::
+
+<br>
+
+::: {.small style="text-align: center;"}
+¿Te interesaría? Escribe a la Unidad de Educación Continua: uec@ier.unam.mx [TODO: QR o formulario de interés]{.todo}
+:::
+
+::: {.notes}
+Cierre con anzuelo: medir interés en la sala. Cada módulo del temario corresponde a un
+bloque de esta charla — el curso es la versión manos-en-el-teclado del webinar,
+partiendo de cero (instalar Python, usar la terminal) hasta el artículo reproducible.
 :::
