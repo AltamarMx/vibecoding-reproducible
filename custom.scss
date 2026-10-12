@@ -110,6 +110,44 @@ $code-block-font-size: 0.55em;
   font-weight: 600;
 }
 
+/* Bloques diff: rojo lo que sale, verde lo que entra (estilo GitHub) */
+.reveal code.sourceCode.diff {
+  .st {
+    color: #b42318;
+    background: #ffebe9;
+    display: inline-block;
+    width: 100%;
+  }
+  .va {
+    color: #1a7f37;
+    background: #e6f4ea;
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+/* Vista "renderizada" gemela de un bloque de código */
+.reveal .md-render {
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  background: #fff;
+  padding: 0.6em 0.9em;
+  font-size: 0.62em;
+  line-height: 1.5;
+
+  .md-h {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: $azul;
+    margin: 0 0 0.45em 0;
+  }
+
+  p { margin: 0 0 0.6em 0; }
+  ul { margin: 0 0 0 1.1em; }
+  li { margin: 0; }
+}
+
 /* Comparaciones lado a lado */
 .reveal .vs-mal,
 .reveal .vs-bien {
@@ -121,6 +159,7 @@ $code-block-font-size: 0.55em;
 .reveal .vs-mal  { background: #fdf3f1; border-top: 4px solid $rojo; }
 .reveal .vs-bien { background: #eef7f0; border-top: 4px solid #2e7d32; }
 
-.reveal pre code {
-  max-height: 480px;
+.reveal pre code,
+.reveal div.sourceCode pre code {
+  max-height: 620px;
 }

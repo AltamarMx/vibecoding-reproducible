@@ -23,13 +23,13 @@ Que la audiencia salga con tres cosas:
 
 ### Bloque 1 · ¿Qué es el vibe coding? (4 min, diap. 2–4)
 
-Se **reutilizan tal cual** tres diapositivas del deck anterior:
+Se reutilizan las tres diapositivas del deck anterior, con la **narrativa invertida**: primero la definición ("¿Qué es el vibe coding?", sin el "entonces"), luego el tuit, y al final quién es Karpathy — se nombra la práctica antes de darle autor y peso:
 
 - **¿Quién es Andrej Karpathy?** — credenciales: doctorado en Stanford con Fei-Fei Li, CS231n, miembro fundador de OpenAI, director de IA en Tesla, "Software 2.0", Zero to Hero, Eureka Labs. El punto: no es un influencer; construyó sistemas de producción y enseña desde los fundamentos, por eso su definición pesa.
 - **Febrero de 2025: el tuit** — citas: *"fully give in to the vibes, embrace exponentials, and forget that the code even exists"*, *"I 'Accept All' always, I don't read the diffs anymore"*. Subrayar: él mismo lo pensó para **proyectos desechables** de fin de semana.
 - **Definición operativa** — "Describir en lenguaje natural lo que quieres, aceptar lo que el modelo escribe **sin leerlo**, y corregir por prueba y error hasta que 'funciona'."
 
-Cierre del bloque con el separador azul que **reformula la pregunta**: la cuestión ya no es *si* haría el análisis de un artículo o tesis con IA, sino ***cómo*** asegurar la reproducibilidad y la certeza de que el análisis está bien ejecutado. Ese "cómo" es el hilo del resto de la charla.
+Tras Karpathy, **diapositiva pivote**: "Esto no es una manera adecuada de hacer ciencia… pero el concepto se puede transformar" — aprovechar la "inteligencia" de los LLM, cambiar la confianza ciega por estructura reproducible y verificación humana. Luego, cierre del bloque con el separador azul que **reformula la pregunta**: la cuestión ya no es *si* haría el análisis de un artículo o tesis con IA, sino ***cómo*** asegurar la reproducibilidad y la certeza de que el análisis está bien ejecutado. Ese "cómo" es el hilo del resto de la charla.
 
 ### Bloque 2 · El proyecto desorganizado (4 min, diap. 5–6)
 
@@ -43,13 +43,14 @@ La anti-demo. Captura (o recorrido en vivo) de una carpeta real tras semanas de 
 
 ### Bloque 3 · LA PROPUESTA + Markdown y Quarto (4 min)
 
-Abre con un separador azul, **LA PROPUESTA**: *Markdown + Quarto + Python — una narrativa computacional en un ambiente virtual aislado*. Es la respuesta en una línea al caos del bloque 2; las definiciones que siguen la desarrollan.
+Abre con un separador azul, **LA PROPUESTA**: *Markdown + Quarto + Python + git — una narrativa computacional, versionada, en un ambiente virtual aislado*. Es la respuesta en una línea al caos del bloque 2; las definiciones que siguen la desarrollan.
 
 - **Markdown** (una diapositiva): lenguaje de marcado ligero (John Gruber, 2004). Texto plano legible por humanos con marcas mínimas (`#`, `**`, `-`, `[]()`). Separa contenido de formato. Es el idioma nativo de GitHub **y de los LLMs** (los agentes leen y escriben Markdown: README, PLAN.md, AGENTS.md). Versionable con git: los diffs se leen, a diferencia de un `.docx`.
 - **Quarto** (una diapositiva): sistema de publicación científica y técnica de código abierto (Posit, sucesor de R Markdown). Un `.qmd` = Markdown + bloques de código **ejecutables** (Python, R, Julia) + opciones documentadas en YAML. Un mismo archivo fuente rinde a HTML, PDF (LaTeX), docx, diapositivas revealjs, sitios web y libros. Remate: *"estas diapositivas están hechas en Quarto"*.
 - **Por qué juntos** (una diapositiva): texto, código, opciones y resultados viven en un solo archivo versionado → **el análisis ES el documento**. No hay "el script por un lado y el Word por otro".
+- **¿Qué es el versionado?** (una diapositiva, con el meme "El proceso de tu tesis"): todos versionamos a mano (`tesis_final_por_fin.docx`); git guarda la historia completa (qué, cuándo, por qué) y cada commit es un punto de retorno. Precisión: **git es software libre**; GitHub es la plataforma donde se publica, gratuita para la comunidad académica (GitHub Education).
 
-### Bloque 4 · El flujo de trabajo: estructura + Quarto + Python (5 min, diap. 10–12)
+### Bloque 4 · Configuración, estructura y fragmentación (6 min)
 
 - Estructura propuesta (diapositiva con el árbol):
 
@@ -60,46 +61,51 @@ proyecto/
 ├── pyproject.toml     # entorno fijado con uv
 ├── uv.lock
 ├── data/
-│   ├── 001_raw/       # inmutable + FUENTES.md (URL, fecha, sha256)
-│   └── 002_interim/
-├── src/<paquete>/     # funciones importables, cada una con prueba
-├── tests/             # pruebas físicas (pytest)
-├── analysis/          # .qmd numerados: 01_eda.qmd, 02_modelo.qmd, ...
-├── figures/           # salida de figuras con nombres estables
-├── outputs/tex/       # tablas .tex para el artículo
-└── docs/              # bitácora de IA, decisiones
+│   ├── 001_raw/           # inmutable: los datos crudos nunca se tocan
+│   ├── 002_intermediate/  # datos procesados
+│   └── 003_results/       # resultados del análisis
+├── src/<paquete>/         # funciones importables, cada una con prueba
+├── tests/                 # pruebas físicas (pytest)
+├── analysis/
+│   └── index.qmd          # la narrativa computacional (un solo qmd)
+└── tex/                   # opcional: main.tex (el artículo) + figuras y
+                           # tablas .tex que index.qmd declara finales
 ```
 
 - **Aviso importante en voz alta:** esta estructura es una *narrativa*, no una receta. Se adapta al proyecto y a los datos (series de tiempo, imágenes, encuestas… cada uno pide carpetas distintas). Lo invariante: datos crudos intocables, entorno fijado, funciones con pruebas, análisis en `.qmd`.
 - Contraste lado a lado: la carpeta caótica del Bloque 2 vs. esta.
-- El flujo: datos crudos → funciones en `src/` (probadas) → `.qmd` que importan de `src/` → `quarto render` → figuras y tablas a sus carpetas → artículo.
+- **La fragmentación** (diapositiva propia, reemplaza al diagrama de flujo): se analiza en una compu → se genera la figura → se manda por correo → se agrega a mano al `.tex` → se publica. Cada flecha es manual y sin registro; todos tenemos la anécdota del paper con la figura incorrecta. La cura: repositorio compartido y cada flecha convertida en comando.
+- `PLAN.md` concentra contrato, bitácora de IA y decisiones de la persona autora (no hay `docs/`).
 - **Colaboración**: todo vive en un repositorio compartido (GitHub); datos, código y resultados no se fragmentan entre computadoras/personas — cualquier colaborador hace `git clone` + `uv sync --locked` y reproduce.
 
-### Bloque 5 · PLAN.md: el contrato con el agente (7 min, diap. 13–15)
+### Bloque 5 · ¿Qué es un agente? Local o en la nube (4 min)
+
+Se presenta al **actor antes que el contrato**: definición y dónde corre, para que el bloque siguiente (PLAN.md, demos) no use el término sin definirlo.
+
+- **Definición:** un agente = LLM + bucle de herramientas (leer y escribir archivos, ejecutar comandos, correr pruebas) que itera hasta cumplir una tarea. A diferencia del chat, **actúa sobre tu repositorio**: por eso necesita reglas (`AGENTS.md`) y un contrato (`PLAN.md`) — anuncia el bloque siguiente.
+- **En la nube:** mi caso, Claude (Claude Code). Modelos más capaces, sin hardware propio, costo por uso; los datos salen de tu máquina (considerarlo con datos sensibles).
+- **Local:** también uso Qwen3.8 27B (`qwen3.8:27b-mlx`, vía MLX en Apple Silicon). Ventajas: los datos no salen, sin costo por token. **Restricción honesta:** se necesita hardware capaz (GPU con VRAM suficiente o Mac con memoria unificada amplia) y el modelo rinde menos que los de frontera.
+- Práctica recomendada: nube para el trabajo pesado; local cuando los datos no deben salir o para tareas acotadas.
+
+### Bloque 6 · PLAN.md: el contrato con el agente (7 min)
 
 El corazón de la charla.
 
 - **Qué es:** el documento donde escribes *qué* quieres hacer con los datos **antes** de pedir una sola línea de código: preguntas de investigación, variables y unidades, supuestos, criterios de aceptación.
-- **Cómo se escribe con el LLM:** prompt tipo "Escribe `PLAN.md` para [objetivo]. **No escribas código.**" El borrador de la IA trae supuestos erróneos; el humano los corrige (unidades, convenciones, casos límite). `git commit` del plan = firma del contrato.
+- **Cómo se escribe con el LLM:** prompt tipo "Escribe `PLAN.md` para [objetivo]. **No escribas código.**" El borrador de la IA puede traer supuestos erróneos; el humano los corrige (unidades, convenciones, casos límite). `git commit` del plan = firma del contrato.
 - **Cómo se ejecuta:** parte por parte. Una sección del plan → código → `quarto render` → revisar el diff → commit. Nunca "hazme todo el análisis de una vez".
+- **Leer el diff** (diapositiva propia, tras "cómo se ejecuta"): definición (líneas que salen `-` y entran `+`; la unidad de revisión con agentes) y caso ficticio: el agente "simplifica" `ghi_diaria` cambiando `sum()` por `mean()` — corre sin error, números plausibles, solo el diff lo delata (ya no es energía, es potencia promedio).
+- **El concepto de prueba** (diapositiva propia): función `calcular_energia(potencia, freq)` que integra potencia [W] → energía [Wh] con frecuencia de resample como parámetro; la prueba usa datos **inventados por la persona autora** con respuesta conocida con papel y lápiz (1200 W constantes × 2 h → 1200 Wh/h, 2400 Wh total; verificado que los asserts pasan). El ground truth lo pone la persona, no el código.
 - **Las pruebas son parte del plan** (aquí entra el "pruebas" del título): cada afirmación verificable del plan se convierte en un test físico con pytest — número de filas esperado, variables no negativas, cantidades nulas donde la física lo exige, intervalos de validez de los modelos. Las pruebas físicas detectan lo imposible; la referencia externa detecta lo plausible pero incorrecto.
 
-*TODO: decidir si el ejemplo es el caso Torreón (EPW + confort adaptativo + GHI, reusando material del deck de 50 min) u otro dataset; el PLAN.md de ejemplo debe mostrarse en pantalla con un error de la IA corregido por el humano.*
+El ejemplo es el dataset de **ClimaLab** (ver Decisiones tomadas); el PLAN.md de ejemplo se muestra en pantalla con los supuestos erróneos de la IA corregidos por la persona autora.
 
-### Bloque 6 · ¿Qué es un agente? Local o en la nube (4 min, diap. 16–17)
-
-- **Definición:** un agente = LLM + bucle de herramientas (leer y escribir archivos, ejecutar comandos, correr pruebas) que itera hasta cumplir una tarea. A diferencia del chat, **actúa sobre tu repositorio**: por eso necesita reglas (`AGENTS.md`) y un contrato (`PLAN.md`).
-- **En la nube:** mi caso, Claude (Claude Code). Modelos más capaces, sin hardware propio, costo por uso; los datos salen de tu máquina (considerarlo con datos sensibles).
-- **Local:** también uso Qwen3 27B *(TODO: confirmar nombre y tamaño exactos del modelo; las tallas publicadas de Qwen3 son 14B/32B/30B-A3B — ¿o es Gemma 3 27B?)* servido localmente. Ventajas: los datos no salen, sin costo por token. **Restricción honesta:** se necesita hardware capaz (GPU con VRAM suficiente o Mac con memoria unificada amplia) y el modelo rinde menos que los de frontera.
-- Práctica recomendada: nube para el trabajo pesado; local cuando los datos no deben salir o para tareas acotadas.
-
-### Bloque 7 · La transición al spec-driven: de Quarto al artículo (5 min, diap. 18–20)
+### Bloque 7 · La transición al spec-driven: de Quarto al artículo (5 min)
 
 - **Nombrar lo que ya hicimos:** PLAN.md + ejecución por partes **es** desarrollo guiado por especificación (*spec-driven development*). La especificación manda; el código la sigue. El agente ejecuta el spec; el humano lo escribe y lo verifica. Es el opuesto exacto del vibe coding del Bloque 1: allá el código no se lee, acá el spec se firma.
 - **Quarto como columna vertebral del spec:** todo queda ordenado y auditable — el código a la vista en el documento, las opciones documentadas (YAML y opciones de celda: `echo`, `fig-cap`, `tbl-cap`...), los resultados regenerables con un solo comando.
 - **Del `.qmd` a la versión final del artículo** (personalizaciones):
-  - Figuras: se escriben a `figures/` con nombres estables → el manuscrito las incluye desde ahí.
-  - Tablas: se exportan como `.tex` a `outputs/tex/` (`to_latex()`, GT) → `\input{}` en el LaTeX de la revista.
+  - El artículo vive en `tex/main.tex`; cuando una figura o tabla se declara **final**, `index.qmd` la guarda en `tex/` (`savefig`, `.to_latex()`) y `main.tex` la importa con `\input{}` / `\includegraphics{}`.
   - El `.qmd` queda como **suplemento reproducible**: cualquier revisor regenera todo con `uv sync --locked && quarto render`.
 - Reiterar: la narrativa (PLAN.md + estructura) se adapta a cada proyecto y a sus datos.
 
@@ -123,9 +129,9 @@ El corazón de la charla.
 | 1 | Vibe coding: Karpathy, tuit, definición | 4 |
 | 2 | El proyecto desorganizado | 4 |
 | 3 | Markdown y Quarto | 4 |
-| 4 | Estructura y flujo de trabajo | 5 |
-| 5 | PLAN.md y pruebas | 7 |
-| 6 | Agentes: local vs. nube | 4 |
+| 4 | Configuración, estructura y fragmentación | 6 |
+| 5 | Agentes: qué son, nube vs. local | 4 |
+| 6 | PLAN.md, diff y pruebas | 7 |
 | 7 | Spec-driven: de Quarto al artículo | 5 |
 | 8 | Paquetes y MCP | 3 |
 | 9 | Cierre: human in the loop | 2 |
@@ -137,7 +143,7 @@ El corazón de la charla.
 ## Decisiones tomadas
 
 - [x] Dataset: **ClimaLab** — `data/ClimaLab_2026-04-08_2026-08-05 (1).parquet` (172 433 filas minutales, abr–ago 2026; tdb, rh, ghi/dni/dhi, ws/wd, p_atm, rain_acc, uv). Verificado: GHI nocturna = 0, 2 huecos > 1 min, NaN en p_atm (17 %) y rh.
-- [x] Demos: **en vivo** — Demo 1 (bloque 2, ≤2 min): recorrido por proyecto desorganizado real; Demo 2a/2b (bloque 5, ≤5 min): PLAN.md con el agente → ejecutar una sección → pytest → render.
+- [x] Demos: **en vivo**, tres — Demo 1 (≤2 min, bloque PLAN.md): pedir el PLAN.md al agente y corregir supuestos; Demo 2 (≤3 min, bloque PLAN.md): ejecutar la sección de temperatura del plan con un **tabset** de dos pestañas (promedio diario vs. *running mean* de 30 días) para decidir con cuál quedarse conservando ambas opciones en el documento para el equipo; Demo 3 (≤2 min, bloque spec-driven): generar la tabla de **temperatura promedio mensual** y mandarla como `.tex` a `tex/` para el `\input{}` de `main.tex`. El desorden del bloque 2 se muestra solo con los listados en las diapositivas (sin demo).
 - [x] Publicación: `quarto publish gh-pages` (por eso el deck es `index.qmd`).
 - [x] Bloque 4 ahora incluye configuración con `uv` (ambiente virtual, lock, y que PLAN.md declare "instalar con uv") — 6 min; colchón queda en 1 min.
 
@@ -147,5 +153,5 @@ El corazón de la charla.
 - [x] Imágenes copiadas: `img/karpathy.png` e `img/karpathy-tweet.png`.
 - [x] Fecha del webinar: jueves 16 de octubre de 2026 (ya en el YAML).
 - [x] Paquete EnerHabitat en PyPI: `enerhabitat` (https://pypi.org/project/enerhabitat/).
-- [ ] Proyecto desorganizado real para la Demo 1 (Guillermo lo pasa en su momento).
+- [x] Proyecto desorganizado real para la Demo 1: `~/paper_enerhabitat` — ilustra el **nivel sutil** del desorden (scripts numerados 00–05/07/90–92, pero `results/` con `_descartado_`, logs `_shard_`, datos de entrada `.epw`, 4 versiones de `comparison_table` y 180 CSVs en `series/`). El bloque 2 ahora tiene dos niveles: el caos evidente (listado ficticio) y este, con diapositiva propia de dos columnas.
 - [ ] QRs: repo del ejemplo y diapositivas en GitHub Pages (tras `quarto publish gh-pages`).
