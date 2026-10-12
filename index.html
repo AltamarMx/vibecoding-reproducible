@@ -98,7 +98,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-b63f77f84c69b9d058ed85fdea0c4222.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-d3c814a8c86229bbcc9d4d8058296ffa.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -237,9 +237,9 @@ Dataset de las demos: data/ClimaLab_2026-04-08_2026-08-05 (1).parquet
   Verificado contra los datos reales: GHI nocturna = 0 (pasa); 2 huecos > 1 min (falla,
   a propósito para la demo); NaN: p_atm 28 747 (17 %), rh 539, ghi 2.
 
-Marcadores pendientes:
+Marcadores:
   DEMO EN VIVO -> caja roja punteada: qué se muestra y cuánto dura
-  TODO         -> dato por confirmar (QRs tras publicar en gh-pages)
+  QR (diap. 2) -> estas diapositivas: altamarmx.github.io/vibecoding-reproducible
 
 Demos en vivo: 1 y 2 en el bloque de PLAN.md (escribir el plan; tabset diario vs
 running mean 30 días), 3 en el bloque spec-driven (tabla de temperatura promedio
@@ -249,8 +249,12 @@ diapositivas (reales: ~/paper_enerhabitat).
 <div class="pregunta small">
 <p>Describir en lenguaje natural lo que quieres, aceptar lo que el modelo escribe<br> <strong>sin leerlo</strong>, y corregir por prueba y error hasta que “funciona”.</p>
 </div>
+<div style="text-align: center; margin-top: 0.4em;">
+<p><a href="img/qrvibecoding.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="img/qrvibecoding.png" height="400"></a></p>
+<p><span class="tiny">altamarmx.github.io/vibecoding-reproducible</span></p>
+</div>
 <aside class="notes">
-<p>Abrir en frío con la definición operativa: primero se nombra la práctica, sin autor. El tuit y el currículum de quien la acuñó vienen enseguida para darle peso y acotarla.</p>
+<p>Abrir en frío con la definición operativa: primero se nombra la práctica, sin autor. El QR queda en pantalla mientras la gente se acomoda: son estas mismas diapositivas. El tuit y el currículum de quien la acuñó vienen enseguida para darle peso y acotarla.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -267,7 +271,7 @@ diapositivas (reales: ~/paper_enerhabitat).
 <h2>Febrero de 2025: el tuit</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p><a href="img/karpathy-tweet.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="img/karpathy-tweet.png" style="width:100.0%"></a></p>
+<p><a href="img/karpathy-tweet.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="img/karpathy-tweet.png" style="width:100.0%"></a></p>
 <div class="tiny">
 <p>Captura del embed oficial de X, <span class="citation" data-cites="karpathy">@karpathy</span>, 2 de febrero de 2025. El embed recorta el texto; <a href="https://x.com/karpathy/status/1886192184808149383">la publicación completa está aquí</a>.</p>
 </div>
@@ -303,7 +307,7 @@ diapositivas (reales: ~/paper_enerhabitat).
 <h2>¿Quién es Andrej Karpathy?</h2>
 <div class="columns">
 <div class="column" style="width:35%;">
-<p><a href="img/karpathy.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="img/karpathy.png" height="400"></a></p>
+<p><a href="img/karpathy.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="img/karpathy.png" height="400"></a></p>
 <div class="tiny">
 <p>Foto: Gladwin Analytics, 2019, vía Wikimedia Commons, CC BY 3.0.</p>
 </div>
@@ -377,15 +381,20 @@ diapositivas (reales: ~/paper_enerhabitat).
 </section>
 <section id="sin-estructura-así-podría-verse-un-proyecto-tras-semanas-de-prompts" class="slide level2">
 <h2>Sin estructura, así podría verse un proyecto tras semanas de prompts</h2>
+<div class="ls-grande">
 <pre class="text"><code>$ ls proyecto_tesis/
-Untitled.ipynb               analisis_final.py
-Untitled1.ipynb              analisis_final_v2.py
-Untitled27.ipynb             analisis_final_v3_AHORASI.py
-datos.csv                    figura1.png
-datos_limpios.csv            figura1_buena.png
-datos_limpios(2).csv         fig_final_USAR_ESTA.png
-prueba.py                    grafica_sin_titulo (3).png
-prueba2_funciona.py          resultados_viejos/</code></pre>
+Untitled.ipynb                    analisis_final.py
+Untitled1.ipynb                   analisis_final_v2.py
+Untitled27.ipynb                  analisis_final_v3_AHORASI.py
+Sin_titulo_copia.ipynb            script_de_chatgpt.py
+datos.csv                         arreglado_con_claude_v2.py
+datos_limpios.csv                 figura1.png
+datos_limpios(2).csv              figura1_buena.png
+datos_limpios_DEFINITIVO.csv      fig_final_USAR_ESTA.png
+prueba.py                         grafica_sin_titulo (3).png
+prueba2_funciona.py               resultados_viejos/
+prueba3_no_tocar.py               resultados_viejos_2/</code></pre>
+</div>
 <div class="pregunta small">
 <p>Este es el nivel <strong>evidente</strong> del desorden. Hay otro más sutil…</p>
 </div>
@@ -577,9 +586,9 @@ texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Q
           display:block!important;
       }</style></aside>
 </section>
-<section id="por-qué-juntos-el-análisis-es-el-documento" class="slide level2">
+<section id="por-qué-juntos-el-análisis-es-el-documento" class="slide level2 center">
 <h2>Por qué juntos: el análisis <strong>es</strong> el documento</h2>
-<div class="columns">
+<div class="columns vs-grandes">
 <div class="column" style="width:50%;">
 <div class="vs-mal">
 <p><strong>El flujo de siempre</strong></p>
@@ -620,7 +629,7 @@ texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Q
 <h2>¿Qué es el versionado?</h2>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p><a href="img/meme-versiones-tesis.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="img/meme-versiones-tesis.png" height="460"></a></p>
+<p><a href="img/meme-versiones-tesis.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img data-src="img/meme-versiones-tesis.png" height="460"></a></p>
 </div><div class="column small" style="width:60%;">
 <ul>
 <li>Todos hemos versionado <strong>a mano</strong>: <code>tesis_final_por_fin_eso_espero.docx</code>.</li>
@@ -644,19 +653,19 @@ texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Q
       }</style></aside>
 <!-- Bloque 4 · Configuración (uv), estructura y flujo · 6 min -->
 </section>
-<section id="todo-empieza-por-el-entorno-uv" class="slide level2">
+<section id="todo-empieza-por-el-entorno-uv" class="slide level2 center">
 <h2>Todo empieza por el entorno: <code>uv</code></h2>
+<div class="ls-grande">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init analisis-climalab          <span class="co"># proyecto + ambiente virtual + pyproject.toml</span></span>
 <span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas pyarrow matplotlib   <span class="co"># instala y FIJA versiones en uv.lock</span></span>
 <span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run quarto render               <span class="co"># todo corre dentro del ambiente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="small">
+</div>
 <ul>
 <li>Un solo gestor: proyecto, versión de Python y paquetes; el ambiente virtual deja de ser un trámite.</li>
 <li><code>uv.lock</code> registra versiones exactas: <strong>la misma ciencia en otra máquina</strong>.</li>
 <li>El espacio nace <strong>con narrativa</strong>: <code>pyproject.toml</code> dice qué es el proyecto, <code>uv.lock</code> con qué corre, <code>PLAN.md</code> y <code>AGENTS.md</code> bajo qué reglas.</li>
 <li>El contrato declara la herramienta: <em>“instala con <code>uv add</code>, ejecuta con <code>uv run</code>”</em> — el agente <strong>no improvisa</strong> un <code>pip install</code> fuera del ambiente.</li>
 </ul>
-</div>
 <aside class="notes">
 <p>Si el agente sabe con qué instalar, no contamina el sistema ni rompe el ambiente: cada paquete que agrega queda fijado en uv.lock y el commit lo registra.</p>
 <style type="text/css">
@@ -808,9 +817,9 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
           display:block!important;
       }</style></aside>
 </section>
-<section id="agentes-en-la-nube-y-agentes-locales" class="slide level2">
+<section id="agentes-en-la-nube-y-agentes-locales" class="slide level2 center">
 <h2>Agentes en la nube y agentes locales</h2>
-<div class="columns">
+<div class="columns vs-grandes">
 <div class="column" style="width:50%;">
 <div class="vs-bien">
 <p><strong>Nube — mi caso: Claude (Claude Code)</strong></p>
@@ -971,8 +980,11 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
 <span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Running mean 30 días</span></span>
 <span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>tdb.resample("1D").mean().rolling(30).mean()</span>
 <span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="small">
+<p>Por eso importa <strong>aprender Quarto</strong> y conocer sus capacidades —tabsets, referencias cruzadas, opciones de celda, formatos—: <strong>no puedes pedirle al agente lo que no sabes que existe.</strong></p>
+</div>
 <aside class="notes">
-<p>Una vuelta completa del ciclo, en vivo: pedir la sección al agente, ver el código aparecer, leer el diff, render. Las pestañas materializan una decisión de análisis sin destruir la alternativa: el documento conserva las dos vistas y el equipo decide viéndolas. Cada vuelta es pequeña: si algo sale mal, el diff es corto. Lo contrario de “Accept All”. Respaldo por si falla la red/el agente: captura del render ya hecho.</p>
+<p>Una vuelta completa del ciclo, en vivo: pedir la sección al agente, ver el código aparecer, leer el diff, render. Las pestañas materializan una decisión de análisis sin destruir la alternativa: el documento conserva las dos vistas y el equipo decide viéndolas. El tabset lo pedí yo, no lo propuso el agente: conocer la herramienta define qué puedes exigir. Cada vuelta es pequeña: si algo sale mal, el diff es corto. Lo contrario de “Accept All”. Respaldo por si falla la red/el agente: captura del render ya hecho.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1072,9 +1084,9 @@ datos + código  ──►  figura_v2_FINAL.png  ──►  por correo  ──�
       }</style></aside>
 <!-- Bloque 7 · Spec-driven · 5 min -->
 </section>
-<section id="esto-ya-tiene-nombre-spec-driven-development" class="slide level2">
+<section id="esto-ya-tiene-nombre-spec-driven-development" class="slide level2 center">
 <h2>Esto ya tiene nombre: <em>spec-driven development</em></h2>
-<div class="columns">
+<div class="columns vs-grandes">
 <div class="column" style="width:50%;">
 <div class="vs-mal">
 <p><strong>Vibe coding (Karpathy)</strong></p>
@@ -1120,7 +1132,7 @@ de palabra en la Demo 3: "cada opción queda escrita y versionada"):
 :::
 
 ````markdown
-```zslksgzrgn
+```suklvsqnba
 #| label: fig-serie
 #| fig-cap: "Flujo medido vs. modelo"
 #| echo: true          # el código se muestra: auditable
@@ -1286,7 +1298,7 @@ No hay celdas ocultas ni estados de notebook fuera de orden.
 <p><br></p>
 <div class="small" style="text-align: center;">
 <p>Guillermo Barrios del Valle · gbv@ier.unam.mx · Instituto de Energías Renovables, UNAM</p>
-<p><span class="todo">TODO: QR del repositorio y de estas diapositivas (GitHub Pages)</span></p>
+<p>Diapositivas y repositorio: <a href="https://altamarmx.github.io/vibecoding-reproducible/">altamarmx.github.io/vibecoding-reproducible</a> · <a href="https://github.com/AltamarMx/vibecoding-reproducible">github.com/AltamarMx/vibecoding-reproducible</a></p>
 </div>
 <aside class="notes">
 <p>Dejar en pantalla durante el Q&amp;A. Preguntas sembradas para quien modera, en este orden: 1. Datos sensibles: “¿Se pueden usar estos agentes cuando los datos no pueden salir de la institución?” (→ diapositiva nube vs local, Qwen/MLX). 2. Autoría: “Si el agente escribió el código y tú lo revisaste, ¿quién es el autor? ¿Hay que declararlo a la revista?” (→ bitácora en PLAN.md; la persona firma; revisar política de IA de la revista). 3. Verificación: “Si el agente escribe el código Y las pruebas, ¿quién vigila al vigilante?” (→ pruebas tautológicas; ground truth de la persona autora; diff + pruebas = redundancia deliberada). 4. Formación: “¿No les atrofia el aprendizaje a los estudiantes?” (→ leer diffs es leer código experto a diario; lo que atrofia es “Accept All”; licencia de conducir).</p>
@@ -1325,7 +1337,7 @@ No hay celdas ocultas ni estados de notebook fuera de orden.
 </div></div>
 <p><br></p>
 <div class="small" style="text-align: center;">
-<p>¿Te interesaría? Escribe a la Unidad de Educación Continua: uec@ier.unam.mx <span class="todo">TODO: QR o formulario de interés</span></p>
+<p>¿Te interesaría? Escribe a la Unidad de Educación Continua: uec@ier.unam.mx</p>
 </div>
 <aside class="notes">
 <p>Cierre con anzuelo: medir interés en la sala. Cada módulo del temario corresponde a un bloque de esta charla — el curso es la versión manos-en-el-teclado del webinar, partiendo de cero (instalar Python, usar la terminal) hasta el artículo reproducible.</p>
