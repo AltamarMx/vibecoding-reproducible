@@ -110,6 +110,24 @@ $code-block-font-size: 0.55em;
   font-weight: 600;
 }
 
+/* Listado grande: código protagonista que llena la diapositiva */
+.reveal .ls-grande pre,
+.reveal .ls-grande div.sourceCode pre {
+  font-size: 0.78em;
+}
+
+.reveal .ls-grande pre code,
+.reveal .ls-grande div.sourceCode pre code {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* Comparaciones a pantalla completa: cajas vs-* como contenido principal */
+.reveal .vs-grandes .vs-mal,
+.reveal .vs-grandes .vs-bien {
+  font-size: 0.82em;
+}
+
 /* Bloques diff: rojo lo que sale, verde lo que entra (estilo GitHub) */
 .reveal code.sourceCode.diff {
   .st {

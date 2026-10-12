@@ -48,9 +48,9 @@ Dataset de las demos: data/ClimaLab_2026-04-08_2026-08-05 (1).parquet
   Verificado contra los datos reales: GHI nocturna = 0 (pasa); 2 huecos > 1 min (falla,
   a propósito para la demo); NaN: p_atm 28 747 (17 %), rh 539, ghi 2.
 
-Marcadores pendientes:
+Marcadores:
   DEMO EN VIVO -> caja roja punteada: qué se muestra y cuánto dura
-  TODO         -> dato por confirmar (QRs tras publicar en gh-pages)
+  QR (diap. 2) -> estas diapositivas: altamarmx.github.io/vibecoding-reproducible
 
 Demos en vivo: 1 y 2 en el bloque de PLAN.md (escribir el plan; tabset diario vs
 running mean 30 días), 3 en el bloque spec-driven (tabla de temperatura promedio
@@ -64,8 +64,15 @@ Describir en lenguaje natural lo que quieres, aceptar lo que el modelo escribe<b
 **sin leerlo**, y corregir por prueba y error hasta que "funciona".
 :::
 
+::: {style="text-align: center; margin-top: 0.4em;"}
+![](img/qrvibecoding.png){height="400px"}
+
+[altamarmx.github.io/vibecoding-reproducible]{.tiny}
+:::
+
 ::: {.notes}
 Abrir en frío con la definición operativa: primero se nombra la práctica, sin autor.
+El QR queda en pantalla mientras la gente se acomoda: son estas mismas diapositivas.
 El tuit y el currículum de quien la acuñó vienen enseguida para darle peso y acotarla.
 :::
 
@@ -160,17 +167,22 @@ es de método. Todo lo que sigue —la propuesta, el plan, las pruebas— respon
 
 ## Sin estructura, así podría verse un proyecto tras semanas de prompts
 
+::: {.ls-grande}
 ```text
 $ ls proyecto_tesis/
-Untitled.ipynb               analisis_final.py
-Untitled1.ipynb              analisis_final_v2.py
-Untitled27.ipynb             analisis_final_v3_AHORASI.py
-datos.csv                    figura1.png
-datos_limpios.csv            figura1_buena.png
-datos_limpios(2).csv         fig_final_USAR_ESTA.png
-prueba.py                    grafica_sin_titulo (3).png
-prueba2_funciona.py          resultados_viejos/
+Untitled.ipynb                    analisis_final.py
+Untitled1.ipynb                   analisis_final_v2.py
+Untitled27.ipynb                  analisis_final_v3_AHORASI.py
+Sin_titulo_copia.ipynb            script_de_chatgpt.py
+datos.csv                         arreglado_con_claude_v2.py
+datos_limpios.csv                 figura1.png
+datos_limpios(2).csv              figura1_buena.png
+datos_limpios_DEFINITIVO.csv      fig_final_USAR_ESTA.png
+prueba.py                         grafica_sin_titulo (3).png
+prueba2_funciona.py               resultados_viejos/
+prueba3_no_tocar.py               resultados_viejos_2/
 ```
+:::
 
 ::: {.pregunta .small}
 Este es el nivel **evidente** del desorden. Hay otro más sutil…
@@ -353,9 +365,9 @@ Señalar las tres piezas en el ejemplo: YAML arriba (opciones documentadas),
 texto en Markdown con referencia cruzada, celda de Python con etiqueta y pie de figura.
 :::
 
-## Por qué juntos: el análisis **es** el documento
+## Por qué juntos: el análisis **es** el documento {.center}
 
-::: {.columns}
+::: {.columns .vs-grandes}
 ::: {.column width="50%"}
 ::: {.vs-mal}
 **El flujo de siempre**
@@ -409,20 +421,20 @@ gratuita para estudiantes y docentes vía GitHub Education.
 
 <!-- Bloque 4 · Configuración (uv), estructura y flujo · 6 min -->
 
-## Todo empieza por el entorno: `uv`
+## Todo empieza por el entorno: `uv` {.center}
 
+::: {.ls-grande}
 ```bash
 uv init analisis-climalab          # proyecto + ambiente virtual + pyproject.toml
 uv add pandas pyarrow matplotlib   # instala y FIJA versiones en uv.lock
 uv run quarto render               # todo corre dentro del ambiente
 ```
+:::
 
-::: {.small}
 - Un solo gestor: proyecto, versión de Python y paquetes; el ambiente virtual deja de ser un trámite.
 - `uv.lock` registra versiones exactas: **la misma ciencia en otra máquina**.
 - El espacio nace **con narrativa**: `pyproject.toml` dice qué es el proyecto, `uv.lock` con qué corre, `PLAN.md` y `AGENTS.md` bajo qué reglas.
 - El contrato declara la herramienta: *"instala con `uv add`, ejecuta con `uv run`"* — el agente **no improvisa** un `pip install` fuera del ambiente.
-:::
 
 ::: {.notes}
 Si el agente sabe con qué instalar, no contamina el sistema ni rompe el ambiente:
@@ -563,9 +575,9 @@ Eso multiplica la velocidad y también multiplica el daño si no hay reglas.
 La mención de PLAN.md anuncia el bloque que sigue: el contrato.
 :::
 
-## Agentes en la nube y agentes locales
+## Agentes en la nube y agentes locales {.center}
 
-::: {.columns}
+::: {.columns .vs-grandes}
 ::: {.column width="50%"}
 ::: {.vs-bien}
 **Nube — mi caso: Claude (Claude Code)**
@@ -722,10 +734,16 @@ tdb.resample("1D").mean().rolling(30).mean()
 :::
 ```
 
+::: {.small}
+Por eso importa **aprender Quarto** y conocer sus capacidades —tabsets, referencias cruzadas,
+opciones de celda, formatos—: **no puedes pedirle al agente lo que no sabes que existe.**
+:::
+
 ::: {.notes}
 Una vuelta completa del ciclo, en vivo: pedir la sección al agente, ver el código aparecer,
 leer el diff, render. Las pestañas materializan una decisión de análisis sin destruir la
 alternativa: el documento conserva las dos vistas y el equipo decide viéndolas.
+El tabset lo pedí yo, no lo propuso el agente: conocer la herramienta define qué puedes exigir.
 Cada vuelta es pequeña: si algo sale mal, el diff es corto. Lo contrario de "Accept All".
 Respaldo por si falla la red/el agente: captura del render ya hecho.
 :::
@@ -813,9 +831,9 @@ son las afirmaciones del plan convertidas en código que vigila al agente.
 
 <!-- Bloque 7 · Spec-driven · 5 min -->
 
-## Esto ya tiene nombre: *spec-driven development*
+## Esto ya tiene nombre: *spec-driven development* {.center}
 
-::: {.columns}
+::: {.columns .vs-grandes}
 ::: {.column width="50%"}
 ::: {.vs-mal}
 **Vibe coding (Karpathy)**
@@ -1018,7 +1036,7 @@ Y una para ti: ¿qué parte de tu próximo análisis **no** delegarías, y por q
 ::: {.small style="text-align: center;"}
 Guillermo Barrios del Valle · gbv@ier.unam.mx · Instituto de Energías Renovables, UNAM
 
-[TODO: QR del repositorio y de estas diapositivas (GitHub Pages)]{.todo}
+Diapositivas y repositorio: [altamarmx.github.io/vibecoding-reproducible](https://altamarmx.github.io/vibecoding-reproducible/) · [github.com/AltamarMx/vibecoding-reproducible](https://github.com/AltamarMx/vibecoding-reproducible)
 :::
 
 ::: {.notes}
@@ -1060,7 +1078,7 @@ Preguntas sembradas para quien modera, en este orden:
 <br>
 
 ::: {.small style="text-align: center;"}
-¿Te interesaría? Escribe a la Unidad de Educación Continua: uec@ier.unam.mx [TODO: QR o formulario de interés]{.todo}
+¿Te interesaría? Escribe a la Unidad de Educación Continua: uec@ier.unam.mx
 :::
 
 ::: {.notes}
