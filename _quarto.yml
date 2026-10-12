@@ -1,0 +1,4 @@
+project:
+  title: "Del vibe coding a la ciencia reproducible"
+  render:
+    - index.qmd

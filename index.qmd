@@ -1,0 +1,785 @@
+---
+title: "Del vibe coding a la ciencia reproducible"
+subtitle: "Markdown, Quarto y pruebas para una investigación transparente"
+author: "Guillermo Barrios del Valle · Instituto de Energías Renovables, UNAM"
+date: 2026-10-16
+date-format: "D [de] MMMM [de] YYYY"
+lang: es
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: c/t
+    hash: true
+    transition: fade
+    footer: "Del vibe coding a la ciencia reproducible · IER-UNAM"
+    center-title-slide: true
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    margin: 0.08
+---
+
+## ¿Quién es Andrej Karpathy?
+
+<!--
+OJO: este comentario va DENTRO de la primera diapositiva. Si se coloca antes del
+primer ##, revealjs crea una diapositiva en blanco con él.
+
+GUION DE 40 MINUTOS (39 + 1 de colchón)
+  Bloque 1  Vibe coding: Karpathy -> tuit -> definición ... 4 min  (diap. 2-5)
+  Bloque 2  El proyecto desorganizado (DEMO 1) ............ 4 min  (diap. 6-7)
+  Bloque 3  LA PROPUESTA + Markdown y Quarto ............... 4 min  (diap. 8-11)
+  Bloque 4  Configuración (uv), estructura y flujo ......... 6 min  (diap. 12-15)
+  Bloque 5  PLAN.md y pruebas (DEMO 2) ..................... 7 min  (diap. 16-19)
+  Bloque 6  Agentes: local vs nube ......................... 4 min  (diap. 20-21)
+  Bloque 7  Spec-driven: de Quarto al artículo ............. 5 min  (diap. 22-24)
+  Bloque 8  Paquetes y MCP ................................. 3 min  (diap. 25-26)
+  Bloque 9  Cierre: human in the loop ...................... 2 min  (diap. 27-28)
+
+Dataset de las demos: data/ClimaLab_2026-04-08_2026-08-05 (1).parquet
+  172 433 filas minutales (2026-04-08 -> 2026-08-05), 10 variables:
+  tdb [C], rh [%], ghi/dni/dhi [W/m2], ws [m/s], wd [grados], p_atm, rain_acc, uv
+  Verificado contra los datos reales: GHI nocturna = 0 (pasa); 2 huecos > 1 min (falla,
+  a propósito para la demo); NaN: p_atm 28 747 (17 %), rh 539, ghi 2.
+
+Marcadores pendientes:
+  DEMO EN VIVO -> caja roja punteada: qué se muestra y cuánto dura
+  TODO         -> dato por confirmar (proyecto desordenado real para la Demo 1, QRs)
+-->
+
+
+::: {.columns}
+::: {.column width="35%"}
+![](img/karpathy.png){height="400px"}
+
+::: {.tiny}
+Foto: Gladwin Analytics, 2019, vía Wikimedia Commons, CC BY 3.0.
+:::
+:::
+::: {.column .small width="65%"}
+- Doctorado en Stanford (2015) con [Fei-Fei Li](https://en.wikipedia.org/wiki/Fei-Fei_Li); creó y dio el curso **CS231n** de redes convolucionales.
+- Miembro fundador de **OpenAI** (2015-2017); director de IA en **Tesla** (2017-2022), a cargo de la visión del Autopilot; de vuelta en OpenAI (2023-2024).
+- En 2017 escribió "Software 2.0": las redes neuronales como nueva forma de programar.
+- Educador: la serie **"Neural Networks: Zero to Hero"** y **Eureka Labs** (2024).
+- El 2 de febrero de 2025 publicó el tuit que acuñó **vibe coding**.
+:::
+:::
+
+::: {.notes}
+El punto: no es un influencer ni un vendedor de herramientas. Es alguien que construyó
+sistemas de producción y enseña desde los fundamentos. Por eso su definición pesa,
+y por eso importa que él mismo la acotó a proyectos desechables.
+:::
+
+## Febrero de 2025: el tuit
+
+::: {.columns}
+::: {.column width="55%"}
+[![](img/karpathy-tweet.png){width="100%"}](https://x.com/karpathy/status/1886192184808149383)
+
+::: {.tiny}
+Captura del embed oficial de X, @karpathy, 2 de febrero de 2025. El embed recorta el texto; la publicación completa sigue en el enlace.
+:::
+:::
+::: {.column .small width="45%"}
+- "There's a new kind of coding I call **vibe coding**, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+- "I 'Accept All' always, I don't read the diffs anymore."
+- Pensado para **proyectos desechables** de fin de semana.
+:::
+:::
+
+::: {.notes}
+Leer las dos citas en voz alta. Subrayar "desechables": el propio Karpathy lo acotó desde el principio.
+:::
+
+## ¿Qué es, entonces, el vibe coding? {.center}
+
+::: {.pregunta .small}
+Describir en lenguaje natural lo que quieres, aceptar lo que el modelo escribe<br>
+**sin leerlo**, y corregir por prueba y error hasta que "funciona".
+:::
+
+::: {.notes}
+Definición operativa. Dejar la frase en pantalla unos segundos antes del separador.
+:::
+
+# La pregunta ya no es **si** haría el análisis de un artículo o una tesis con IA… {.center background-color="#1f3a5f"}
+
+::: {.pregunta}
+…sino **cómo**: ¿cómo aseguro la **reproducibilidad** y la **certeza**<br>
+de que el análisis o cálculo está bien ejecutado?
+:::
+
+::: {.notes}
+Reformular la pregunta es el giro de la charla: la adopción ya ocurrió, el problema ahora
+es de método. Todo lo que sigue —la propuesta, el plan, las pruebas— responde al "cómo".
+:::
+
+<!-- Bloque 2 · El proyecto desorganizado · 4 min -->
+
+## Así se ve un proyecto después de semanas de prompts
+
+```text
+$ ls proyecto_tesis/
+Untitled.ipynb               analisis_final.py
+Untitled1.ipynb              analisis_final_v2.py
+Untitled27.ipynb             analisis_final_v3_AHORASI.py
+datos.csv                    figura1.png
+datos_limpios.csv            figura1_buena.png
+datos_limpios(2).csv         fig_final_USAR_ESTA.png
+prueba.py                    grafica_sin_titulo (3).png
+prueba2_funciona.py          resultados_viejos/
+```
+
+::: {.demo}
+[Demo en vivo 1 · ≤ 2 min]{.demo-title}
+Recorrido por un proyecto real desorganizado. [TODO: proyecto que pasará Guillermo]{.todo}
+¿Qué script genera qué figura? ¿Qué versión de pandas era? ¿Dónde quedaron los datos originales?
+:::
+
+::: {.notes}
+No burlarse: todos hemos tenido esta carpeta. El chiste es reconocerla.
+Con IA es peor: cada prompt genera código nuevo más rápido de lo que ordenamos el anterior.
+:::
+
+## Los síntomas
+
+- Nadie —ni tú dentro de tres meses— puede **regenerar la figura 3**.
+- El resultado depende del **orden en que corriste las celdas** del notebook.
+- El revisor 2 pregunta de dónde salió un número y **no hay respuesta**.
+- Los datos crudos fueron **sobrescritos** por una "limpieza" de la que no quedó registro.
+- No hay entorno fijado: en otra máquina, **otro resultado** (¿o ni corre?).
+
+<br>
+
+::: {.pregunta .small}
+El problema no es la IA: es la falta de estructura.<br>
+**Cada prompt agrega entropía si no hay contrato.**
+:::
+
+::: {.notes}
+Transición: las dos herramientas que ordenan todo lo demás son viejas, simples y aburridas:
+texto plano con marcas (Markdown) y documentos que ejecutan su propio código (Quarto).
+:::
+
+<!-- Bloque 3 · La propuesta + Markdown y Quarto · 4 min -->
+
+# La propuesta {.center background-color="#1f3a5f"}
+
+::: {.pregunta}
+**Markdown + Quarto + Python**<br>
+una **narrativa computacional**<br>
+en un **ambiente virtual aislado**
+:::
+
+::: {.notes}
+La respuesta al caos anterior, en una línea. Markdown para escribir y para hablar con los
+agentes; Quarto para que el documento ejecute su propio código; Python para el cálculo;
+y todo dentro de un ambiente aislado y recreable (uv). "Narrativa computacional": el
+proyecto se lee de principio a fin como una historia que corre.
+:::
+
+## ¿Qué es Markdown?
+
+::: {.columns}
+::: {.column width="50%"}
+**Lo que escribes**
+
+```markdown
+# Resultados
+
+El flujo **máximo** fue de 4.2 L/s
+(ver [método](metodo.md)).
+
+- medición directa
+- modelo ajustado
+```
+:::
+::: {.column width="50%"}
+**Lo que se ve**
+
+[Resultados]{style="display:block; font-size:1.3em; font-weight:700; color:#1f3a5f; margin-bottom:0.3em;"}
+
+El flujo **máximo** fue de 4.2 L/s (ver [método](#)).
+
+- medición directa
+- modelo ajustado
+:::
+:::
+
+::: {.small}
+- Lenguaje de marcado **ligero** (John Gruber, 2004): texto plano legible con marcas mínimas.
+- Separa **contenido** de **formato**; se versiona con git y los *diffs* se leen (a diferencia de un `.docx`).
+- Es el idioma nativo de GitHub **y de los LLMs**: `README.md`, `PLAN.md`, `AGENTS.md`.
+:::
+
+::: {.notes}
+La clave para esta charla: cuando hablas con un agente, hablas en Markdown.
+El plan, las reglas y la bitácora van a ser archivos .md dentro del repositorio.
+:::
+
+## ¿Qué es Quarto?
+
+::: {.small}
+- Sistema de **publicación científica y técnica** de código abierto (Posit; sucesor de R Markdown).
+- Un `.qmd` = Markdown + bloques de código **ejecutables** (Python, R, Julia) + opciones en YAML.
+- Un mismo archivo fuente rinde a **HTML, PDF (LaTeX), docx, diapositivas, sitios web y libros**.
+:::
+
+````markdown
+---
+title: "Análisis de mediciones"
+format: html
+---
+
+Los datos muestran un máximo en verano (@fig-serie).
+
+```{{python}}
+#| label: fig-serie
+#| fig-cap: "Serie de tiempo de la medición"
+df.plot(x="fecha", y="flujo_l_s")
+```
+````
+
+::: {.pregunta .small}
+Estas diapositivas están hechas en Quarto.
+:::
+
+::: {.notes}
+Señalar las tres piezas en el ejemplo: YAML arriba (opciones documentadas),
+texto en Markdown con referencia cruzada, celda de Python con etiqueta y pie de figura.
+:::
+
+## Por qué juntos: el análisis **es** el documento
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.vs-mal}
+**El flujo de siempre**
+
+1. Script que genera figuras
+2. Copiar y pegar al Word
+3. Cambian los datos…
+4. …repetir a mano y rezar
+
+Texto y código **divergen** desde el día uno.
+:::
+:::
+::: {.column width="50%"}
+::: {.vs-bien}
+**Con Quarto**
+
+1. Texto, código, opciones y resultados en **un solo archivo** versionado
+2. Cambian los datos → `quarto render`
+3. Figuras, tablas y números se **regeneran solos**
+
+El documento no puede mentir sobre su código.
+:::
+:::
+:::
+
+::: {.notes}
+Frase ancla: "el análisis ES el documento". No hay un script por un lado y un Word por el otro.
+Esto es lo que vuelve auditable el trabajo hecho con IA: todo lo que la IA escribió está a la vista.
+:::
+
+<!-- Bloque 4 · Configuración (uv), estructura y flujo · 6 min -->
+
+## Todo empieza por el entorno: `uv`
+
+```bash
+uv init analisis-climalab          # proyecto + ambiente virtual + pyproject.toml
+uv add pandas pyarrow matplotlib   # instala y FIJA versiones en uv.lock
+uv run quarto render               # todo corre dentro del ambiente
+```
+
+::: {.small}
+- Un solo gestor: proyecto, versión de Python y paquetes; el ambiente virtual deja de ser un trámite.
+- `uv.lock` registra versiones exactas: **la misma ciencia en otra máquina**.
+- El espacio nace **con narrativa**: `pyproject.toml` dice qué es el proyecto, `uv.lock` con qué corre, `PLAN.md` y `AGENTS.md` bajo qué reglas.
+- El contrato declara la herramienta: *"instala con `uv add`, ejecuta con `uv run`"* — el agente **no improvisa** un `pip install` fuera del ambiente.
+:::
+
+::: {.notes}
+Si el agente sabe con qué instalar, no contamina el sistema ni rompe el ambiente:
+cada paquete que agrega queda fijado en uv.lock y el commit lo registra.
+:::
+
+## Estructura propuesta
+
+```text
+proyecto/
+├── PLAN.md            # el contrato: qué se hará con los datos
+├── AGENTS.md          # reglas del espacio de trabajo para el agente
+├── pyproject.toml     # entorno fijado con uv
+├── uv.lock
+├── data/
+│   ├── 001_raw/       # inmutable + FUENTES.md (URL, fecha, sha256)
+│   └── 002_interim/
+├── src/proyecto/      # funciones importables, cada una con prueba
+├── tests/             # pruebas físicas (pytest)
+├── analysis/          # 01_eda.qmd, 02_modelo.qmd, ...
+├── figures/           # figuras con nombres estables
+├── outputs/tex/       # tablas .tex para el artículo
+└── docs/              # bitácora de IA, decisiones
+```
+
+::: {.notes}
+Recorrer de arriba a abajo: primero los contratos (PLAN, AGENTS), luego el entorno,
+luego datos con crudos intocables, funciones probadas, análisis numerado, salidas del artículo.
+Detalle para la demo: el parquet llegó como "ClimaLab_2026-04-08_2026-08-05 (1).parquet",
+con espacio y "(1)". Moverlo a data/001_raw/ con nombre limpio y registrar su sha256
+en FUENTES.md es parte de la narrativa.
+:::
+
+## Una narrativa, no una receta
+
+::: {.small}
+La estructura **se adapta al proyecto y a sus datos**: series de tiempo, imágenes, encuestas…
+cada uno pide carpetas distintas. Lo que no cambia:
+:::
+
+::: {.cards}
+::: {.card}
+[1]{.num}
+
+**Datos crudos intocables**
+
+[`data/001_raw/` nunca se sobrescribe; su origen queda en `FUENTES.md`.]{.desc}
+:::
+
+::: {.card}
+[2]{.num}
+
+**Entorno fijado**
+
+[`uv.lock`: las mismas versiones en tu máquina, la del agente y la del revisor.]{.desc}
+:::
+
+::: {.card}
+[3]{.num}
+
+**Funciones con pruebas**
+
+[Todo cálculo que importa vive en `src/` y tiene su prueba en `tests/`.]{.desc}
+:::
+
+::: {.card}
+[4]{.num}
+
+**Análisis en `.qmd`**
+
+[El código a la vista, las opciones documentadas, el render regenerable.]{.desc}
+:::
+:::
+
+::: {.notes}
+Insistir: no es plantilla rígida. Es una narrativa que cuenta de dónde vienen los datos
+y cómo se convierten en el artículo. Los cuatro invariantes sí son innegociables.
+:::
+
+## El flujo de trabajo
+
+::: {.small}
+```text
+data/001_raw/  ──►  src/ (funciones probadas)  ──►  analysis/*.qmd
+                                                        │
+                                              uv run quarto render
+                                                        │
+                                   ┌────────────────────┴───────────────────┐
+                                   ▼                                        ▼
+                             figures/*.png                          outputs/tex/*.tex
+                                   └────────────────► artículo ◄────────────┘
+```
+:::
+
+- Cada flecha es **reproducible con un comando**; nada se copia a mano.
+- Si mañana llega un dato nuevo, el artículo entero se regenera.
+- Todo vive en **un repositorio compartido** (GitHub): datos, código y resultados **no se fragmentan** entre las computadoras de cada colaborador — quien llega hace `git clone`, `uv sync --locked` y reproduce.
+
+::: {.notes}
+Contrastar mentalmente con la carpeta del bloque 2: allá las flechas vivían
+en la memoria de la persona; acá viven en el repositorio.
+:::
+
+<!-- Bloque 5 · PLAN.md y pruebas · 7 min -->
+
+## PLAN.md: el contrato con el agente
+
+::: {.columns}
+::: {.column width="55%"}
+```markdown
+# PLAN · Clima ClimaLab (abr–ago 2026)
+
+## Objetivo
+Caracterizar temperatura, radiación
+y viento de la estación.
+
+## Datos
+climalab_2026-04-08_2026-08-05.parquet
+172 433 filas · cadencia 1 min
+tdb [°C] · rh [%] · ghi/dni/dhi [W/m²]
+ws [m/s] · wd [°] · p_atm · rain_acc
+
+## Herramientas
+Instalar con `uv add`, correr con `uv run`.
+
+## Pasos
+1. Validar crudos con pruebas físicas
+2. Huecos y NaN → data/002_interim/
+3. Día típico, rosa de viento, GHI diaria
+
+## Criterios de aceptación
+- `pytest` pasa · GHI nocturna = 0
+- Figuras regenerables con `quarto render`
+```
+:::
+::: {.column width="45%" .small}
+- Se escribe **antes** de pedir una sola línea de código.
+- Dice **qué** quieres de los datos: preguntas, variables, **unidades**, supuestos.
+- Y **con qué**: la sección de herramientas le dice al agente cómo instalar y ejecutar.
+- `git commit` del plan = **firma del contrato**.
+- Cada sección es una unidad de trabajo para el agente.
+:::
+:::
+
+::: {.notes}
+El corazón de la charla empieza aquí. El plan no es burocracia: es lo que convierte
+"hazme el análisis" en una secuencia de encargos verificables.
+:::
+
+## Cómo se escribe: el LLM propone, el humano corrige
+
+::: {.small}
+Prompt: *"Escribe `PLAN.md` para [objetivo]. **No escribas código.**"*
+
+El borrador de la IA **siempre trae supuestos erróneos** —unidades, convenciones, casos límite—
+y corregirlos en el plan cuesta minutos; corregirlos en el código, días.
+:::
+
+::: {.demo}
+[Demo en vivo 2a · ≤ 2 min]{.demo-title}
+Pedir el `PLAN.md` para el parquet de ClimaLab, leer el borrador en voz alta y corregir sus
+supuestos antes del commit: asume datos **horarios** (son minutales), promedia la dirección
+del viento **aritméticamente** y no dice qué hacer con los **NaN** de `p_atm` (17 % de la serie).
+:::
+
+::: {.notes}
+Mensaje: la revisión más barata del proyecto es la del plan.
+Es el único momento donde corregir no implica reescribir nada.
+:::
+
+## Cómo se ejecuta: parte por parte
+
+::: {.pregunta .small}
+Nunca "hazme todo el análisis".<br>
+Una sección del plan → código → render → **leer el diff** → commit.
+:::
+
+```text
+      PLAN.md §3
+         │
+   el agente escribe          uv run quarto render
+         │                            │
+      git diff  ──── humano lee ──────┤
+         │                            │
+      commit  ◄── pasa pruebas ◄── pytest
+```
+
+::: {.demo}
+[Demo en vivo 2b · ≤ 3 min]{.demo-title}
+Ejecutar una sección del plan con el agente: ver el código aparecer, leer el diff,
+correr `pytest` y `quarto render`, hacer commit.
+:::
+
+::: {.notes}
+Cada vuelta del ciclo es pequeña: si algo sale mal, el diff es corto y se entiende.
+Esto es lo contrario de "Accept All".
+:::
+
+## Las pruebas son parte del plan
+
+::: {.small}
+Cada afirmación verificable del plan se convierte en una **prueba física** con pytest.
+Estas tres corren sobre los datos reales de ClimaLab, con el resultado real:
+:::
+
+```python
+def test_radiacion_nocturna():        # PASA: el piranómetro está bien
+    noche = df.between_time("22:00", "04:00")
+    assert (noche["ghi"] == 0).all()
+
+def test_rangos_fisicos():            # PASA: rh en [0, 100], ws ≥ 0
+    assert df["rh"].between(0, 100).all()
+    assert df["ws"].ge(0).all()
+
+def test_serie_completa():            # FALLA: hay 2 huecos > 1 min
+    saltos = df.index.to_series().diff()
+    assert not (saltos > pd.Timedelta("1min")).any()
+```
+
+::: {.small}
+- La prueba que **falla** no es un fracaso: obliga a decidir (¿interpolar?, ¿dejar el hueco?) y a **documentar la decisión**.
+- Las pruebas **físicas** detectan lo imposible; la **referencia externa** detecta lo plausible pero incorrecto.
+- Ojo con las pruebas tautológicas que proponen los LLM: prueban que el código hace lo que el código hace.
+:::
+
+::: {.notes}
+Aquí entra el "pruebas" del título. No son pruebas de software por cumplir:
+son las afirmaciones del plan convertidas en código que vigila al agente.
+:::
+
+<!-- Bloque 6 · Agentes · 4 min -->
+
+## ¿Qué es un agente?
+
+::: {.pregunta .small}
+Agente = LLM + un bucle de **herramientas**<br>
+(leer y escribir archivos, ejecutar comandos, correr pruebas)<br>
+que itera hasta cumplir una tarea.
+:::
+
+::: {.small}
+- A diferencia del chat, **actúa sobre tu repositorio**: crea archivos, corre código, ve los errores y se corrige.
+- Por eso necesita **reglas** (`AGENTS.md`) y un **contrato** (`PLAN.md`): sin ellos, optimiza "que no truene", no "que esté bien".
+- El ciclo: lee el plan → propone acción → ejecuta herramienta → observa el resultado → repite.
+:::
+
+::: {.notes}
+Diferencia clave con copiar/pegar desde el chat: el agente cierra el ciclo solo.
+Eso multiplica la velocidad y también multiplica el daño si no hay reglas.
+:::
+
+## Agentes en la nube y agentes locales
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.vs-bien}
+**Nube — mi caso: Claude (Claude Code)**
+
+- Modelos de frontera, los más capaces
+- Sin hardware propio
+- Costo por uso
+- Los datos **salen de tu máquina**: considerarlo con datos sensibles
+:::
+:::
+::: {.column width="50%"}
+::: {.vs-mal}
+**Local — también uso Qwen3.8 27B** (`qwen3.8:27b-mlx`)
+
+- Los datos **no salen**; sin costo por token
+- Exige **hardware capaz**: aquí corre vía **MLX** en Apple Silicon con memoria unificada amplia (o GPU con VRAM suficiente)
+- Rinde menos que los modelos de frontera
+:::
+:::
+:::
+
+::: {.small}
+Práctica: nube para el trabajo pesado; local cuando los datos no deben salir o para tareas acotadas.
+:::
+
+::: {.notes}
+Ser honesto con la restricción local: no es gratis, se paga en hardware y en capacidad del modelo.
+La decisión es por proyecto, no ideológica.
+:::
+
+<!-- Bloque 7 · Spec-driven · 5 min -->
+
+## Esto ya tiene nombre: *spec-driven development*
+
+::: {.columns}
+::: {.column width="50%"}
+::: {.vs-mal}
+**Vibe coding (Karpathy)**
+
+- El prompt es la especificación
+- El código **no se lee**
+- "Accept All"
+- Para proyectos **desechables**
+:::
+:::
+::: {.column width="50%"}
+::: {.vs-bien}
+**Spec-driven (lo que acabamos de hacer)**
+
+- `PLAN.md` **firmado** es la especificación
+- El agente ejecuta el spec; el humano lo escribe y lo **verifica**
+- Diff leído, pruebas pasando, commit
+- Para trabajo que **se publica**
+:::
+:::
+:::
+
+::: {.notes}
+Nombrar lo que ya hicimos en el bloque anterior: no inventamos nada,
+es la misma transición que está dando la industria del software con los agentes.
+:::
+
+## Quarto mantiene todo ordenado y auditable
+
+::: {.small}
+- El **código a la vista** en el documento: lo que la IA escribió no se puede esconder.
+- Las **opciones documentadas**: el YAML y las opciones de celda dicen cómo se generó cada salida.
+- Los **resultados regenerables** con un solo comando.
+:::
+
+````markdown
+```{{python}}
+#| label: fig-serie
+#| fig-cap: "Flujo medido vs. modelo"
+#| echo: true          # el código se muestra: auditable
+#| warning: false      # decisión explícita y versionada
+fig = comparar(df_medido, df_modelo)
+```
+````
+
+::: {.small}
+Cada decisión de presentación queda **escrita y versionada**, no en la memoria de quien hizo la figura.
+:::
+
+::: {.notes}
+Esto responde "¿y dónde reviso lo que hizo la IA?": en el qmd y en el diff.
+No hay celdas ocultas ni estados de notebook fuera de orden.
+:::
+
+## Del `.qmd` a la versión final del artículo
+
+::: {.small}
+- **Figuras** → `figures/` con nombres estables; el manuscrito las incluye desde ahí.
+- **Tablas** → `.tex` en `outputs/tex/`, directo al LaTeX de la revista:
+:::
+
+::: {.columns}
+::: {.column width="52%"}
+```python
+# en analysis/03_resultados.qmd
+(tabla_resumen
+   .style.format(precision=2)
+   .to_latex("outputs/tex/tabla_resultados.tex"))
+
+fig.savefig("figures/fig03_comparacion.png", dpi=300)
+```
+:::
+::: {.column width="48%"}
+```latex
+% en el manuscrito de la revista
+\begin{table}
+  \input{outputs/tex/tabla_resultados.tex}
+  \caption{Resumen de resultados.}
+\end{table}
+
+\includegraphics{figures/fig03_comparacion.png}
+```
+:::
+:::
+
+::: {.small}
+El `.qmd` queda como **suplemento reproducible**: el revisor regenera todo con
+`uv sync --locked && uv run quarto render`.
+:::
+
+::: {.notes}
+La personalización final del artículo (formato de revista) no rompe la reproducibilidad:
+las tablas y figuras siguen naciendo del qmd, el manuscrito solo las importa.
+:::
+
+<!-- Bloque 8 · Paquetes y MCP · 3 min -->
+
+## Cuando `src/` crece: conviértelo en paquete
+
+::: {.small}
+Si acumulas muchas funciones que reutilizas entre proyectos, el siguiente paso natural es un
+**paquete instalable**: documentado, versionado, **citable**.
+:::
+
+::: {.pregunta .small}
+Caso en casa: [**EnerHabitat** en PyPI](https://pypi.org/project/enerhabitat/)
+
+`uv add enerhabitat`
+:::
+
+::: {.small}
+- De scripts de investigación a herramienta que cualquiera instala.
+- Las versiones quedan fijadas en el `uv.lock` de quien la usa: tu ciencia se vuelve **dependencia reproducible** de la de otros.
+:::
+
+::: {.notes}
+EnerHabitat: simulación de la transferencia de calor en envolventes, IER-UNAM.
+El mensaje no es "publiquen paquetes": es que la estructura de este flujo (src/ + tests/)
+deja el paquete casi listo.
+:::
+
+## Recomendación a futuro: MCP
+
+::: {.small}
+**MCP (Model Context Protocol)**: estándar abierto para exponer tus funciones y datos como
+**herramientas que cualquier agente puede invocar** directamente.
+:::
+
+- Tiene sentido cuando tu código **ya es biblioteca**: muchas funciones probadas, quizá un paquete.
+- El agente deja de *reescribir* tus cálculos y pasa a **llamarlos**: menos código nuevo que auditar.
+- Es recomendación a futuro, **no requisito** del flujo de hoy.
+
+::: {.notes}
+Un minuto, sin demo. La idea que debe quedar: la trayectoria natural es
+funciones → paquete → herramientas MCP, y cada paso reduce lo que el agente improvisa.
+:::
+
+<!-- Bloque 9 · Cierre · 2 min -->
+
+## Saber programar es la licencia de conducir
+
+::: {.cards .tres}
+::: {.card}
+[A]{.num}
+
+**Auditar**
+
+[Sin leer código no puedes revisar lo que el agente escribe: el diff es tu instrumento.]{.desc}
+:::
+
+::: {.card}
+[B]{.num}
+
+**Entender**
+
+[El criterio de dominio decide si el número es plausible; la IA no sabe lo que no le dijiste.]{.desc}
+:::
+
+::: {.card}
+[C]{.num}
+
+**Guiar**
+
+[*Human in the loop*: el plan, las correcciones y la firma son humanas. La IA no firma.]{.desc}
+:::
+:::
+
+<br>
+
+::: {.pregunta .small}
+La IA sube el **piso**; el **techo** —criterio, verificación, firma— sigue siendo humano.
+:::
+
+::: {.notes}
+Cerrar el arco: del vibe coding (código sin leer) a la ciencia reproducible
+(spec firmado, código auditado, pruebas, reproducción desde cero).
+:::
+
+## {.center}
+
+::: {.pregunta}
+¿Qué parte de tu próximo análisis<br>**no** delegarías, y por qué?
+:::
+
+<br>
+
+::: {.small style="text-align: center;"}
+Guillermo Barrios del Valle · gbv@ier.unam.mx · Instituto de Energías Renovables, UNAM
+
+[TODO: QR del repositorio y de estas diapositivas (GitHub Pages)]{.todo}
+:::
+
+::: {.notes}
+Dejar la pregunta en pantalla durante las preguntas del público.
+:::

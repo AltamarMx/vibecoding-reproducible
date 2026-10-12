@@ -1,0 +1,126 @@
+/*-- scss:defaults --*/
+
+$azul: #1f3a5f;
+$rojo: #c44536;
+$gris: #6c757d;
+
+$presentation-heading-color: $azul;
+$link-color: #1f6f8b;
+$presentation-font-size-root: 30px;
+$presentation-h2-font-size: 1.4em;
+$code-block-font-size: 0.55em;
+
+/*-- scss:rules --*/
+
+.reveal .tiny {
+  font-size: 0.45em;
+  color: $gris;
+}
+
+.reveal .small {
+  font-size: 0.72em;
+}
+
+.reveal .fuente {
+  font-size: 0.45em;
+  color: $gris;
+  margin-top: 1em;
+}
+
+.reveal .pregunta {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: $azul;
+  text-align: center;
+  background: #f4f6f9;
+  border-radius: 12px;
+  padding: 0.6em 0.8em;
+  margin: 0.4em 0;
+}
+
+.reveal .has-dark-background .pregunta {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* Tarjetas numeradas */
+.reveal .cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6em;
+
+  &.dos   { grid-template-columns: repeat(2, 1fr); }
+  &.tres  { grid-template-columns: repeat(3, 1fr); }
+}
+
+.reveal .card {
+  background: #f4f6f9;
+  border-top: 4px solid $azul;
+  border-radius: 10px;
+  padding: 0.55em 0.75em;
+  font-size: 0.62em;
+
+  .num {
+    display: inline-block;
+    background: $azul;
+    color: #fff;
+    border-radius: 50%;
+    width: 1.7em;
+    height: 1.7em;
+    text-align: center;
+    line-height: 1.7em;
+    font-weight: 700;
+    margin-bottom: 0.35em;
+  }
+
+  .desc {
+    display: block;
+    color: #4a4a4a;
+    margin-top: 0.35em;
+    line-height: 1.35;
+  }
+}
+
+/* Caja de demo en vivo */
+.reveal .demo {
+  border: 3px dashed $rojo;
+  border-radius: 12px;
+  background: #fdf3f1;
+  padding: 0.55em 0.9em;
+  font-size: 0.68em;
+  margin-top: 0.6em;
+
+  .demo-title {
+    display: block;
+    font-weight: 700;
+    color: $rojo;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3em;
+  }
+}
+
+/* Marcador de pendiente, visible al revisar */
+.reveal .todo {
+  background: #fff3cd;
+  border-radius: 6px;
+  padding: 0.05em 0.35em;
+  font-size: 0.8em;
+  color: #7a5c00;
+  font-weight: 600;
+}
+
+/* Comparaciones lado a lado */
+.reveal .vs-mal,
+.reveal .vs-bien {
+  border-radius: 10px;
+  padding: 0.5em 0.7em;
+  font-size: 0.62em;
+}
+
+.reveal .vs-mal  { background: #fdf3f1; border-top: 4px solid $rojo; }
+.reveal .vs-bien { background: #eef7f0; border-top: 4px solid #2e7d32; }
+
+.reveal pre code {
+  max-height: 480px;
+}
